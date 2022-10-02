@@ -1,0 +1,18 @@
+# Markdown
+
+## Glow
+Render markdown on the CLI, with pizzazz!
+
+```bash
+# Read from file
+glow README.md
+
+# Read from stdin
+glow -
+
+# Fetch README from GitHub / GitLab
+glow github.com/charmbracelet/glow
+
+# Fetch markdown from HTTP
+glow https://host.tld/file.md
+```

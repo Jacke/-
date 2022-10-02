@@ -1,0 +1,80 @@
+#!/bin/zsh
+: '
+                                                                             _____
+          _____        _____                _____   ______   _______    _____\    \
+         |\    \_    /      |_         _____\    \_|\     \  \      \  /    / |    |
+         \ \     \  /         \       /     /|     |\\     \  |     /|/    /  /___/|
+          \|      ||     /\    \     /     / /____/| \|     |/     //|    |__ |___|/
+           |      ||    |  |    \   |     | |____|/   |     |_____// |       \
+   ______  |      ||     \/      \  |     |  _____    |     |\     \ |     __/ __
+  /     / /      /||\      /\     \ |\     \|\    \  /     /|\|     ||\    \  /  \
+ |      |/______/ || \_____\ \_____\| \_____\|    | /_____/ |/_____/|| \____\/    |
+ |\_____\      | / | |     | |     || |     /____/||     | / |    | || |    |____/|
+ | |     |_____|/   \|_____|\|_____| \|_____|    |||_____|/  |____|/  \|____|   | |
+  \|_____|                                  |____|/                         |___|/
+			@Copyright https://github.com/Jacke
+'
+function header() {
+	echo -e "$(tput sgr 0 1)$(tput setaf 6)$1$(tput sgr0)"
+}
+function exist() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Ask for the administrator password upfront
+#sudo -v
+#echo
+
+#pushd "$HOME/dotfiles"
+#git pull
+#./sync.py
+#source "$HOME/.bashrc"
+#popd
+#echo
+
+# Nyan cat! Yay!
+# nyan
+
+if [[ $OSTYPE == 'darwin'* ]]; then
+  header "Updating macOS..."
+  sudo softwareupdate -i -a
+  brew update -v && brew upgrade -v && brew outdated -v
+fi
+
+if [[ $OSTYPE == 'linux'* ]]; then
+  header "Updating Linux..."
+  if (exist sudo); then
+    sudo apt-get update
+    sudo apt-get -y upgrade
+  else
+    apt-get update
+    apt-get -y upgrade
+  fi
+fi
+
+# ZSH Plugins
+header "Updating dotfiles..."
+source ~/.zshrc
+omz update
+zinit update
+
+# Node
+if (exist npm); then
+  header "Updating NodeJS packages..."
+  npm upgrade -g
+fi
+
+## Refresher for my .dotfiles
+
+# General dotfiles
+#cp ~/.zshrc ../
+#cp ~/.nanorc ../
+#cp ~/.path ../
+#mkdir -p ../.zshrc.d
+#cp ~/.zshrc.d/* ../.zshrc.d/
+
+# oh-my-zsh
+#cp -r ~/.oh-my-zsh ../
+#zip -r .oh-my-zsh.zip ../.oh-my-zsh
+#rm -rf .oh-my-zsh/
+#git add ../ && git commit -S -m "bump" && git push origin master

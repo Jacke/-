@@ -1,0 +1,32 @@
+{{- $codespaces:= env "CODESPACES" | not | not -}}
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+{{- $fname := promptString "First name" "John" -}}
+{{ $lname := promptString "Last name" "Doe" }}
+{{ $full := promptBool "Extra system packages" true }}
+[data]
+    fname = {{ $fname | quote }}
+    lname = {{ $lname | quote }}
+    name = {{ list $fname $lname | join " " | quote }}
+    codespaces = {{ $codespaces }}
+    extra_zsh_plugins = {{ promptBool "Enable additional zsh plugins" false }}
+{{- if $codespaces }}{{/* Codespaces dotfiles setup is non-interactive */}}
+    email = ""
+    gpgsign = true
+{{- else }}{{/* Interactive setup */}}
+    {{- $email := promptString "Email" -}}
+    {{- $gpgsign := promptBool "GPG Support" false}}
+    email = {{ $email | quote }}
+    gpgsign = {{ $gpgsign }}
+{{- if $gpgsign }}
+    {{- $signkey_id := promptString "GPG Key ID" }}
+    {{- $signkey_id2 := promptString "GPG Key ID #2" "" }}
+    {{- $email2 := promptString "Additional Email" "" }}
+    signkey_id = {{ $signkey_id | quote }}
+    signkey_id2 = {{ $signkey_id2 | quote }}
+    email2 = {{ $email | quote }}
+{{- end }}
+    {{- $github_login := promptString "Github Username" "Not defined" }}
+    {{- $github_token := promptString "Github API Token" "Not defined" }}
+    github_login = {{ $github_login  | quote }}
+    github_token = {{ $github_token  | quote }}
+{{- end }}

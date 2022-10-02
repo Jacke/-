@@ -1,0 +1,19 @@
+{
+	"Print to console": {
+		"prefix": "log",
+		"body": [
+			"console.log('$1');",
+			"$2"
+		],
+		"description": "Log output to console"
+	},
+	"Play framework action": {
+		"prefix": "action",
+		"body": [
+			"def $1() = ${2|Action(),Action(parse.json),SecuredAction(),SecuredAction(parse.json)|}.async { implicit rs =>",
+			"\t\t${3: Future.successful(Ok(Json.toJson(Map(\"status\" -> \"ok\"))))}",
+			"}"
+		],
+		"description": "Async play framework action"
+	}
+}

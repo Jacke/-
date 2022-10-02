@@ -1,0 +1,15 @@
+# temp files directories
+node_modules/
+cache/
+log/
+*.swp
+.DS_Store
+tmp/
+docs/
+obsolete/
+.config/cheat/cheatsheets/community/.git
+dot_config/cheat/cheatsheets/community/dot_git
+dot_config/cheat/cheatsheets/community/dot_github
+scripts/private
+.vscode/
+backup/

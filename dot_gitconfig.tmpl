@@ -1,0 +1,220 @@
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+{{- if .gpgsign }}
+	signingkey = {{ .signkey_id }}
+	#signinkey = {{ .signkey_id2 }}
+	#email = {{ .email2 }}
+{{- end }}
+
+[alias]
+  a = add
+  aa = !git ls-files -d | xargs git rm && git ls-files -m -o --exclude-standard | xargs git add
+  ad  = add
+  ada = add -A
+  addnw = "!sh -c 'git diff -U0 -w --no-color \"$@\" | git apply --cached --ignore-whitespace --unidiff-zero -'"
+  adf = !git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 git add
+  adu = !git diff --name-only --cached | fzf -m --print0 | xargs -0 git restore --staged
+  ag = "!sh -c 'git ls-files -m -o --exclude-standard | grep $1 | xargs git add --all' -"
+  amend = commit -a --amend
+  amend = commit --amend -v
+  assume = update-index --assume-unchanged
+  assume-unchanged = update-index --assume-unchanged
+  assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+  bl  = !"f() { git blame $1 | fzf --preview 'echo {} | cut -f1 -d\" \" | xargs git show --color'; }; f"
+  br  = branch -av
+  br = branch -v
+  brd = !git branch | fzf -m --print0 | tr -d ' ' | xargs -0 git branch -D
+  browse = "!gh repo view --web"
+  c = commit
+  cane = commit --amend --no-edit
+  cbr = rev-parse --abbrev-ref HEAD
+  cg = "!sh -c 'git ls-files -m | grep $1 | xargs git checkout ' -"
+  churn = "!f() { git log --all -M -C --name-only --format='format:' \"$@\" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print \"count\tfile\"} {print $1 \"\t\" $2}' | sort -g; }; f"
+  cl  = clean -fd
+  cleanup = "!git remote prune origin && git gc && git clean -df && git stash clear"
+  cm  = commit --verbose
+  cnv = commit --no-verify
+  co = checkout
+  co  = checkout
+  co = checkout
+  co = checkout
+  cob = checkout -b
+  cob = checkout -b
+  coc = !git branch | fzf | xargs git checkout
+  cof = !git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 git checkout
+  conf = "!git s | grep ^U"
+  cont = rebase --continue
+  cor = !"f() { git fetch -p; git checkout -b $1 origin/$1; }; f"
+  count = shortlog -sn
+  cp  = cherry-pick
+  d = "!git diff --ignore-space-at-eol -b -w --ignore-blank-lines -- ':!**/package-lock.json' ':!**/yarn.lock'"
+  day = "!sh -c 'git log --reverse --no-merges --branches=* --date=local --after=\"yesterday 11:59PM\" --author=\"`git config --get user.name`\"'"
+  del = !git branch -r --merged | grep -v 'master\\|develop' | sed 's/origin\\///' | xargs -n 1 git push --delete origin && git fetch origin --prune
+  delete-merged-branches = "!f() { git checkout --quiet master && git branch --merged | grep --invert-match '\\*' | xargs -n 1 git branch --delete; git checkout --quiet @{-1}; }; f"
+  deleted = "!git log --diff-filter=D --summary | grep delete"
+  dev = checkout develop
+  df  = diff
+  dfc = diff --cached
+  dfh = diff HEAD
+  dfr = !git diff origin `git rev-parse --abbrev-ref HEAD`
+  dft = difftool
+  dg = "!sh -c 'git ls-files -m | grep $1 | xargs git diff' -"
+  dgc = "!sh -c 'git ls-files | grep $1 | xargs git diff $2 $3 -- ' -"
+  discard = checkout --
+  dkal = difftool -y -t Kaleidoscope
+  forget = "!git fetch -p origin && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
+  fp  = fetch -p
+  g   = !ghq get
+  history = log --graph --decorate --pretty=format:'%C(yellow)%h%Creset  %C(auto)%d%Creset %s  %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short --date-order -n30
+  l = log --graph --pretty=format:'%Cred%h%Creset %C(bold blue)%an%C(reset) - %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  la = "!git config -l | grep alias | cut -c 7-"
+  latest = "!git for-each-ref --sort='-committerdate' --format='%(color:red)%(refname)%(color:reset)%09%(committerdate)' refs/remotes | sed -e 's-refs/remotes/origin/--' | less -XFR"
+  lf  = !git lfs install
+  lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg  = log --stat
+  lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lgd = !"f() { b=$(git rev-parse --abbrev-ref HEAD); git log origin/$b..$b --oneline | fzf --preview 'echo {} | cut -f1 -d\" \" | xargs git show --color'; }; f"
+  lgg = !git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  lgp = log -p
+  lgs = !git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit | fzf --preview 'echo {} | cut -f1 -d\" \" | xargs git show --color'
+  list-assume-unchanged = !sh -c 'git ls-files -v | grep "^[a-z]" | sed "s/^..//"'
+  list-conflicts = diff --name-only --diff-filter=U
+  lt = describe --tags --abbrev=0
+  mkal = mergetool -y -t Kaleidoscope
+  mt  = mergetool
+  op  = !gh repo view --web
+  opg = !gh repo view `ghq list | fzf | cut -d "/" -f 2,3` --web
+  opi = !gh issue view `gh issue list | fzf` --web
+  opp = !gh pr view `gh pr list | fzf` --web
+  pl  = !git pull origin `git rev-parse --abbrev-ref HEAD`
+  plr = pull --rebase
+  pnv = push --no-verify
+  poh = push -u origin head
+  pr  = !"f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request' | head -n 1; }; f"
+  ps  = !git push origin `git rev-parse --abbrev-ref HEAD`
+  ra  = !"f() { echo $1 | sed 's/https/git/g' | sed 's/$/.git/g' | xargs git remote add forked; }; f"
+  rb  = rebase
+  recent = "!git for-each-ref --sort='-committerdate' --format='%(color:red)%(refname)%(color:reset)%09%(committerdate)' refs/heads | sed -e 's-refs/heads/--' | less -XFR"
+  remotes = remote -v
+  review = "!git log --no-merges --pretty=%an | head -n 100 | sort | uniq -c | sort -nr"
+  rf  = reflog --format='%C(auto)%h %<|(20)%gd %C(blue)%ci%C(reset) %gs (%s)'
+  rfs = !git reflog --format='%C(auto)%h %<|(20)%gd %C(blue)%ci%C(reset) %gs (%s)' | awk -F' ' '{print $2}' | xargs git reset --hard
+  rg = "!sh -c 'git ls-files --others --exclude-standard | grep $1 | xargs rm' -"
+  rmg = !ghq list -p | fzf -m --print0 | xargs -0 rm -rf
+  rs  = reset
+  rsh = reset --hard
+  rv  = !"f() { git revert $1^..$2; }; f"
+  s = status -s -b
+  s = status --short
+  sc  = stash clear
+  sca = secrets --scan-history
+  sd  = !git stash drop `git stash list | awk -F':' '{print $1}' | fzf --preview 'git -c color.ui=always stash show -p {}'`
+  si = submodule init
+  sk  = update-index --skip-worktree
+  sl  = !git stash list | awk -F':' '{print $1}' | fzf --preview 'git -c color.ui=always stash show -p {}'
+  sp  = !git stash pop `git stash list | awk -F':' '{print $1}' | fzf --preview 'git -c color.ui=always stash show -p {}'`
+  squash = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
+  ss  = stash save
+  ss  = status
+  st  = status
+  su  = ls-files --others --exclude-standard
+  su = submodule update
+  sub = "!git submodule sync && git submodule update"
+  ub = branch -f --no-track
+  ulf = !git lfs uninstall && touch **/* && git commit -a
+  unassume = update-index --no-assume-unchanged
+  unassume-unchanged = update-index --no-assume-unchanged
+  unassumeall = "!git assumed | xargs git update-index --no-assume-unchanged"
+  undo = reset --soft HEAD~1
+  unstage = reset HEAD --
+  update = !git fetch upstream && git rebase upstream/`git rev-parse --abbrev-ref HEAD`
+  update-branch = branch -f --no-track
+  usk = update-index --no-skip-worktree
+  vi  = !nvim ~/.gitconfig
+  wdiff = diff --color-words
+  wshow = show --color-words
+
+[core]
+  attributesfile = ~/.gitattributes
+  excludesfile = "~/.gitignore"
+  hooksPath = ~/.git_template
+  pager = delta
+  editor = code --wait
+  abbrev = 9
+
+[color]
+  ui = true
+  diff = auto
+  branch = auto
+  status = auto
+  showbranch = auto
+
+[color "branch"]
+  local = green
+  remote = red
+  current = green reverse
+
+[color "diff"]
+  old = red bold
+  new = green bold
+  meta = yellow bold
+  frag = magenta bold
+
+[commit]
+  gpgsign = {{ .gpgsign }}
+  template = ~/.git_template/commit-template
+
+[credential]
+  helper = osxkeychain
+
+[delta]
+  line-numbers = true
+  plus-color = "#012800"
+  minus-color = "#340001"
+  syntax-theme = Monokai Extended
+  features = unobtrusive-line-numbers decorations
+  whitespace-error-style = 22 reverse
+  syntax-theme = base16-256
+[delta "unobtrusive-line-numbers"]
+  line-numbers = true
+  # line-numbers-minus-style = "#444444"
+  # line-numbers-zero-style = "#444444"
+  # line-numbers-plus-style = "#444444"
+  line-numbers-left-format = "{nm:>4}┊"
+  line-numbers-right-format = "{np:>4}│"
+  line-numbers-left-style = blue
+  line-numbers-right-style = blue
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
+  hunk-header-decoration-style = yellow box
+[interactive]
+  diffFilter = delta --color-only
+[merge]
+  ff            = false
+  conflictstyle = diff3
+  tool          = vimdiff
+[mergetool]
+  prompt = false
+  keepBackup = false
+[mergetool "vimdiff"]
+  path   = nvim
+[pull]
+  ff = only
+[github]
+  token = {{ .github_token }}
+[gpg]
+  program = gpg2
+[ghq]
+  vcs = github
+  root = ~/Dev/_GitHub
+# [url "git@github.com:"]
+#   insteadOf = https://github.com/
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true

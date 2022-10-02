@@ -1,0 +1,2 @@
+dot_path merge=union
+dot_zshrc.d/plugins.zsh merge=union

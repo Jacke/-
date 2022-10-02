@@ -1,0 +1,8 @@
+# Clean
+
+## Sensitive data
+
+```
+bfg --delete-files YOUR-FILE-WITH-SENSITIVE-DATA
+bfg --replace-text passwords.txt
+```

@@ -1,0 +1,6 @@
+# macOS Tools
+
+## Launchpad manager
+
+Load YAML positions of apps
+* lporg load launchpad.yaml

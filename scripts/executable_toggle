@@ -1,0 +1,55 @@
+#!/usr/bin/env zsh
+
+################################################################################
+# iam (~) project
+# https://github.com/Jacke/-
+# Toggle script / folder with scripts
+# by creating a link to script and put it to ./bin
+# Status: WIP
+################################################################################
+function parseScripts {
+  while (( $#@ )); do
+    if [[ -d "$1" ]] then
+      echo "scripts directory to check $1"
+    fi
+    if [[ -f "$1" ]] then
+      echo "scripts file to check $1"
+    else
+      res=$(fd "$1*")
+      if [[ $res == "" ]]; then 
+        echo "Script $1 not found"
+      else
+        echo "scripts file to check $res"
+      fi
+    fi
+    shift
+  done
+}
+
+case "$1" in
+##############################################################################
+# Init
+# Run toggle on predef values
+  init) echo "init";;
+##############################################################################
+# Lists
+# Detect script_name or folder and output
+  lists) echo "list";;
+##############################################################################
+# Toggle
+  scripts) 
+    shift
+    parseScripts ${(u)@[@]};;
+# Detect script_name or folder
+# Check it's state
+# stow them up to bin / remove it from bin
+# check if they exist / not exist
+  *) echo "SCRIPT TOGGLER"
+     echo "Usage:"
+     echo "./toggle command <arguments>"
+     echo "\n"
+     echo "Commands:"
+     echo "init – toggle default predefined scripts"
+     echo "scripts - toggle script or script's folder"
+     echo "list – list scripts with folders";;
+esac

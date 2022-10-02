@@ -1,0 +1,68 @@
+# Global gitignore.
+
+# Vim
+.*.s[a-w][a-z]
+Session.vim
+.netrwhist
+.XTabline*
+
+# Mac OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+.fuse_hidden*
+.nfs*
+
+# Windows
+Thumbs.db
+
+# Python, Virtualenv
+.venv*
+.mypy_cache
+__pycache__
+*.py[cod]
+.condaenv
+
+# Etc
+npm-debug.log
+
+# Log files
+events.out.tfevents.*
+
+# Icon must end with two \r
+Icon
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# IDE
+.idea/
+.directory/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+.ipynb_checkpoints/
+.vimspector.json
+
+# Vim swap file.
+.swp
+
+./Scripts/private/

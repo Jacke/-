@@ -1,0 +1,21 @@
+# Version managers
+
+## Node version manager
+
+* List remote versions
+
+```bash
+fnm list-remote
+```
+
+* Install a version
+
+```bash
+fnm install v17.4.0
+```
+
+* Set a default version
+
+```bash
+fnm default v17.4.0
+```

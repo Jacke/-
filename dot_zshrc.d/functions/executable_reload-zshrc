@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+function reload-zshrc() {
+  source "${HOME}/.zshrc"
+}
+reload-zshrc "$@"

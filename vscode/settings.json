@@ -1,0 +1,52 @@
+{
+  "files.watcherExclude": {
+    "**/.bloop": true,
+    "**/.metals": true,
+    "**/.ammonite": true,
+    "**/target": true
+  },
+  "files.exclude": {
+    "target": true,
+    ".hydra": true,
+    ".history": true,
+    ".metals": true,
+    ".vscode": true,
+    ".catalyst": true,
+    ".bloop": true,
+    "arch/target": true
+  },
+  "workbench.preferredDarkColorTheme": "Flate Punk (Italic)",
+  "workbench.preferredLightColorTheme": "Dark Horizon",
+  "nightlight.gpsLat": 55.7558,
+  "nightlight.gpsLong": 37.6173,
+  "nightlight.dayTheme": "Dark Horizon",
+  "nightlight.nightTheme": "Flate Punk",
+  "dayNightThemeSwitcher.dayThemeCustomizations": {},
+  "workbench.colorTheme": "Dark Horizon",
+  "auto-fold-unfold.onEditing": {
+    "enable": false,
+    "foldMode": "fast",
+    "unfoldMode": "parent"
+  },
+  "settings.cycle": [
+    {
+      "id": "colorTheme", // must be unique
+      "overrideWorkspaceSettings": true,
+      "values": [
+        {
+          "workbench.colorTheme": "aura"
+        },
+        {
+          "workbench.colorTheme": "Flate Punk"
+        },
+        {
+          "workbench.colorTheme": "Dark Horizon"
+        }
+      ]
+    }
+  ],
+  "workbench.iconTheme": "vs-seti",
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

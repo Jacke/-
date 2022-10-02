@@ -1,0 +1,9 @@
+# Git Revise
+
+https://git-revise.readthedocs.io/en/latest/index.html
+
+git revise is a git subcommand to efficiently update, split, and rearrange commits. 
+It is heavily inspired by git rebase, however it tries to be more efficient and ergonomic 
+for patch-stack oriented workflows.
+
+* git revise -i <after-this-commit>

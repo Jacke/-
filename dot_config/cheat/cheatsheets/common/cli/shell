@@ -1,0 +1,92 @@
+# Stan's shell setup
+
+> Stan <iamjacke@gmail.com>
+> [Github Profile](https://dotfiles.download)
+
+## Prompt
+
+[Starship](https://starship.rs/guide/)
+
+## Tools
+
+* jc --ifconfig
+
+## Backups
+
+* restic --help
+
+## Formatters
+
+* jq file.json
+* fq . file (Binary file)
+* htmlq `curl --silent example.com | htmlq 'body' | bat --language html`
+* gron `gron "https://api.github.com/repos/tomnomnom/gron/commits?per_page=1" | fgrep "commit.author"`
+* fx `curl "https://api.github.com/repos/tomnomnom/gron/commits?per_page=1" | fx` 
+
+## Tree
+
+* alder
+* tre
+
+## Calculators
+
+* bcal (Byte calculator)
+* pcalc (Byte calculator)
+* ipcal (CIDR IP calculator)
+* sipcalc (CIDR IP calculator)
+
+
+# Repeat the last command
+$ !!
+# Clear the screen
+$ clear 
+# Or you can clear the screen with CTRL+l, as well
+
+
+## Lines of code
+cloc dir/
+
+## Data transormation
+
+### CSV
+
+* mlr --csv sort -f name input.csv
+
+# Networking
+
+## Ping
+prettyping example.com
+
+## Geofetch
+iponmap 54.247.127.254
+
+## Traceroute
+mtr -z facebook.com
+
+## File with data operations
+
+* miller - like awk, sed, cut, join, and sort for name-indexed data such as CSV and tabular JSON.
+(https://miller.readthedocs.io/en/latest/quick-examples.html)
+
+## Colors
+
+## Colorized output
+
+echo $(ansi --yellow WARNING:) This is warning
+
+## ZZComplete
+
+Complete options from manual pages
+
+* press Ctrl-F to start the completer
+
+## Screenshots & Recordings
+
+* terminalizer (Record terminal)
+* carbon-now -h Script.sh (Create screenshot of source code in Script.sh file)
+
+## Notification
+
+noti - Monitor a process and trigger a notification
+
+* noti command
