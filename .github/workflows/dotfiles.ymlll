@@ -1,10 +1,10 @@
-name: ~ (iam) Install process
+name: ~ (iam) Install on Mac OS X
 
 on:
   push:
-    paths:
-      - 'install'
-      - 'Brewfile'
+    # paths:
+      # - 'install'
+      # - 'Brewfile'
 env:
   HOMEBREW_BUNDLE_MAS_SKIP: '436203431 1333542190 1152838744 937984704 1037126344 1492337444 696977615 691133982 1435473426 290986013 640199958 425264550 1355679052 1364693514 682658836 1351639930 470158793 405399194 1531085233 797590911 1025073421 409203825 409201541 639968404 967805235 1496833156 1514817810 931571202 1429033973 1522267256 1508732804 1475387142 1263858588 1436522307 1278508951 1482454543 497799835 43620343'
   HOMEBREW_BUNDLE_BREW_SKIP: 'adoptopenjdk15 adoptopenjdk15-jre adoptopenjdk16 adoptopenjdk16-jre adoptopenjdk9 shpotify youtube-dl rocksdb clang-format apache-spark arduino-cli aws-iam-authenticator bloop boost cmake deno docbook-xsl docker-machine docker-machine-driver-vmware dsq duck flux gcc ghostscript grpc grpcurl k9s kafka kubernetes-cli minikube mycli nss openjdk pandoc podman poppler qemu qt rust ruby scala-cli tesseract unicorn wtfutil zookeeper'
@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Set up git repository
         uses: actions/checkout@v2
-      - name: pwdd
+      - name: Get current working directory
         run: pwd
       - name: Update Homebrew
         run:

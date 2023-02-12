@@ -36,6 +36,7 @@ main() {
 	echo -e "\x1B[32m****************************\x1B[0m"
 	echo -e "\x1B[01;89mHow to use Chezmoi:\x1B[0m"
 	echo "\x1B[01;94mhttps://www.chezmoi.io/user-guide/command-overview/\x1B[0m"
+	echo -e "\x1B[32m****************************\x1B[0m"
 }
 
 if [[ "$1" = "installed" ]]; then

@@ -1,12 +1,19 @@
 #!/bin/bash
+##################
+# Command output memoize
+# ./cache_out <Command> <op>
+# Where <op>
+# - drop   - Reinit a saved output
+# - <none> - Fetch the latest output
+##################
+# TODO: Add params
 PATH=$PATH:/usr/local/bin/
-
 cmd=$1
 operation=$2
 SED_PATTERN="s/\/tmp\/${cmd}_cache.//g"
 
-if compgen -G "/tmp/${cmd}_cache*" > /dev/null; then
-  KEY="`ls /tmp/${cmd}_cache* | sed ${SED_PATTERN}`"
+if compgen -G "/tmp/${cmd}_cache*" >/dev/null; then
+  KEY="$(ls /tmp/${cmd}_cache* | sed ${SED_PATTERN})"
 fi
 
 # *DEBUG PANEL*
@@ -26,18 +33,16 @@ fi
 #  fi
 #done
 
-if [ "$operation" == "drop" ]
-then
-  echo "rm -rf /tmp/${cmd}*"
+if [ "$operation" == "drop" ]; then
+  # echo "rm -rf /tmp/${cmd}*"
   rm -rf /tmp/$cmd*
-  FILE="/tmp/${cmd}_cache.`echo -n "$KEY" | md5sum | cut -c -10`"
+  FILE="/tmp/${cmd}_cache.$(echo -n "$KEY" | md5sum | cut -c -10)"
 else
   FILE="/tmp/${cmd}_cache.$KEY"
 fi
 
 # use cached file or execute the command and cache it
-if [ -f $FILE ]
-then
+if [ -f $FILE ]; then
   cat $FILE
 else
   $@ | tee $FILE

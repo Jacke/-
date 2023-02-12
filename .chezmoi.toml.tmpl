@@ -3,12 +3,16 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
 {{- $fname := promptString "First name" "John" -}}
 {{ $lname := promptString "Last name" "Doe" }}
 {{ $full := promptBool "Extra system packages" true }}
+{{- $prompt_completion := promptString "Empty for default OR AUTOCOMPLETE for zsh-autocomplete plugin" "" -}}
+{{- $extra_zsh_plugins := promptBool "Enable additional zsh plugins" false -}}
+
 [data]
     fname = {{ $fname | quote }}
     lname = {{ $lname | quote }}
     name = {{ list $fname $lname | join " " | quote }}
     codespaces = {{ $codespaces }}
-    extra_zsh_plugins = {{ promptBool "Enable additional zsh plugins" false }}
+    prompt_completion = {{ $prompt_completion | quote }}
+    extra_zsh_plugins = {{ $extra_zsh_plugins }}
 {{- if $codespaces }}{{/* Codespaces dotfiles setup is non-interactive */}}
     email = ""
     gpgsign = true
@@ -23,7 +27,7 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     {{- $email2 := promptString "Additional Email" "" }}
     signkey_id = {{ $signkey_id | quote }}
     signkey_id2 = {{ $signkey_id2 | quote }}
-    email2 = {{ $email | quote }}
+    email2 = {{ $email2 | quote -}}
 {{- end }}
     {{- $github_login := promptString "Github Username" "Not defined" }}
     {{- $github_token := promptString "Github API Token" "Not defined" }}

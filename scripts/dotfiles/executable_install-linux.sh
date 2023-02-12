@@ -7,13 +7,13 @@
 if [[ "$DOCKER" -eq 1 ]]; then
 	full_path=$(realpath $0)
 	dir_path=$(dirname $full_path)
-	source $dir_path/scripts/dotfiles/executable_install-common.sh
+	source $dir_path/../scripts/dotfiles/executable_install-common.sh
 else
 	source <(curl -sL https://raw.githubusercontent.com/Jacke/-/main/scripts/dotfiles/executable_install-common.sh)
 fi
 
 # Install essential packages
-PACKAGES="git zsh exa zoxide nano python3 python-pip silversearcher-ag wget neofetch"
+PACKAGES="git zsh exa zoxide nano python3 python-pip silversearcher-ag wget neofetch fzf"
 ## TODO: Replace it with:
 #                       *> unipack install Jacke/minimal-dotfiles
 if (exist sudo); then

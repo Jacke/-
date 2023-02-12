@@ -11,8 +11,13 @@ export NO_TUTORIAL=1
 export NO_INPUT=1
 
 function exist() {
-	command -v "$1" >/dev/null 2>&1
+    command -v "$1" >/dev/null 2>&1
 }
+function fn_exists() {
+  whence -w $1 >/dev/null
+}
+
+function fn_exists() { declare -F "$1" > /dev/null; }
 
 function log() {
 	printf "\033[33;34m %s: %s\n" "$(date -u)" "$1"
@@ -118,6 +123,18 @@ function core_install() {
 
 	## ** Install arguments **
 	get_params
+	echo -e "Params: chezmoi init
+		--promptBool full=$FULL_PKG
+		--promptBool gpgsign=$GPGSIGN
+		--promptBool extra_zsh_plugins=$FULL_PLUGINS
+		--promptString fname=$FNAME
+		--promptString lname=$LNAME
+		--promptString email=$EMAIL
+		--promptString signkey_id=$SIGNKEYID
+		--promptString signkey_id2=$SIGNKEYID2
+		--promptString email2=$EMAIL2
+		--promptString github_login=$GITHUB_LOGIN
+		--promptString github_token=$GITHUB_TOKEN"
 
 	chezmoi init \
 		--promptBool full=$FULL_PKG \

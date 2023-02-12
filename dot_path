@@ -5,7 +5,7 @@
 ####################################################
 # General                                          #
 ####################################################
-source "$HOME/.zshrc.d/functions.zsh"
+source "$HOME/.zshrc.d/core_functions.zsh"
 export PATH=/usr/local/bin:${PATH}:/sbin:/usr/local/sbin
 export PATH="$HOME/.local/bin:$PATH"
 ####################################################
@@ -15,12 +15,16 @@ export PATH="$HOME/.local/bin:$PATH"
 # Uncomment it to set directry
 # export GOROOT="$HOME/.go"
 # export PATH="$GOPATH/bin:$PATH"
-(( ${+commands[go]} )) && export PATH=${PATH}:`go env GOPATH`/bin
+# (( ${+commands[go]} )) && export PATH=${PATH}:`go env GOPATH`/bin
 ####################################################
 # Java                                             #
 ####################################################
-(( ${+commands[javac]} )) && export JAVA_HOME="$(/usr/libexec/java_home)"
-(( ${+commands[javac]} )) && export PATH="${JAVA_HOME}/bin:${PATH}"
+if [ -d $HOME/.sdkman ]; then
+  # source "$HOME/.sdkman/bin/sdkman-init.sh"
+else
+  (( ${+commands[javac]} )) && export JAVA_HOME="$(/usr/libexec/java_home)"
+  (( ${+commands[javac]} )) && export PATH="${JAVA_HOME}/bin:${PATH}"
+fi
 ####################################################
 # Rust                                             #
 ####################################################

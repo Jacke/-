@@ -1,8 +1,8 @@
 ####################################################################################################################################
-##########################               Env & Exports        ######################################################################
+##########################            Env & Exports           ######################################################################
 ##########################      https://dotfiles.download     ######################################################################
 ####################################################################################################################################
-export DOTFILES_VERSION="1.0.0pre1"
+export DOTFILES_VERSION="1.0.1-RC1"
 # Path                                       #
 ##############################################
 source "$HOME/.path"
@@ -58,8 +58,6 @@ if [ -n "$HTTP_TOOLKIT_ACTIVE" ]; then
     fi
 fi
 # --httptoolkit-end--
-(( ${+commands[cargo]} )) && . "$HOME/.cargo/env"
-(( ${+commands[fnm]} )) && eval "`fnm env`"
 ####################################################
 # Temporary Files                                  #
 ####################################################
@@ -116,8 +114,3 @@ export NNN_TRASH=1 # Trash instead of delete the files
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 # gpg
 export GPG_TTY=$(tty)
-# Cloud SDK
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
-# The next line enables shell command completion for gcloud.
-if [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi

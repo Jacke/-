@@ -15,37 +15,64 @@
 
   https://github.com/Jacke/- iam ~ Dotfiles project
 '
-
-exist() {
+function header() {
+	echo -e "$(tput sgr 0 1)$(tput setaf 6)$1$(tput sgr0)"
+}
+function exist() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Brew update
+function fn_exists() {
+  whence -w $1 >/dev/null
+}
+
+# TODO: Update arguments
+# dotfiles-update [all | plugins | system | ...]
+
 if [[ $OSTYPE == 'darwin'* ]]; then
+  header "Updating macOS..."
+  sudo softwareupdate -i -a
   brew update -v && brew upgrade -v && brew outdated -v
 fi
 
-# Apt update
 if [[ $OSTYPE == 'linux'* ]]; then
+  header "Updating Linux..."
   if (exist sudo); then
-    sudo apt-get update && sudo apt-get upgrade
+    sudo apt-get update
+    sudo apt-get -y upgrade
   else
-    apt-get update && apt-get upgrade
+    apt-get update
+    apt-get -y upgrade
   fi
+fi
+
+# ZSH Plugins
+if [ -d $HOME/.zinit ]; then
+  source ~/.zshrc
+  header "Updating dotfiles..."
+  zinit update
 fi
 
 # Node
 if (exist npm); then
+  header "Updating NodeJS packages..."
   npm upgrade -g
 fi
-# ZSH Plugins
-if (exist npm); then
-  omz update
-fi
-zinit update
+
+#pushd "$HOME/dotfiles"
+#git pull
+#./sync.py
+#source "$HOME/.bashrc"
+#popd
+#echo
+
+# Nyan cat! Yay!
+# nyan
+
+## Refresher for my .dotfiles
 
 # Dotfiles
-chezmoi cd && git pull upstream --rebase 
+# chezmoi cd && git pull upstream --rebase
 
 ## **Refresher** [WIP] for dotfiles with user defined content
 # sed -n -e '/# IGNORE START/,/# IGNORE END/{ /# IGNORE/d; p }' dot_path

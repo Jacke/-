@@ -1,0 +1,21 @@
+# GLOBDOTS lets files beginning with a . be matched without explicitly specifying the dot.
+# setopt globdots
+setopt auto_cd
+setopt multios
+setopt prompt_subst
+
+# If globs do not match a file, just run the command rather than throwing a no-matches error.
+# This is especially useful for some commands with '^', '~', '#', e.g. 'git show HEAD^1'
+unsetopt NOMATCH
+
+# ** MOTD executable **
+MOTD="neofetch"
+MOTD_PARAMS=""
+
+# ** Completion **
+# Empty = Vanilla OMZ completion
+# AUTOCOMPLETE = zsh-autocomplete plugin (https://github.com/marlonrichert/zsh-autocomplete)
+COMPLETION={{ .prompt_completion }}
+
+# ** Correction **
+ENABLE_CORRECTION=true

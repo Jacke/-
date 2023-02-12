@@ -1,5 +1,5 @@
 ####################################################################################################################################
-##########################       Completions, Shortcuts             ################################################################
+##########################   Completions, Corrections, Shortcuts    ################################################################
 ##########################      https://dotfiles.download           ################################################################
 ####################################################################################################################################
 export BAT_PAGER="less -irRSx4"
@@ -10,13 +10,30 @@ setopt correct
 # zstyle ':autocomplete:*' fuzzy-search off
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/bitcomplete bit
-# keep the default fzf 
+# keep the default fzf
 zstyle ':autocomplete:tab:*' completion fzf
 zstyle ":completion:*" list-colors off
 zstyle ":completion:*" list-colors fzf
 # bindkey '^I' fzf-completion # ?????????????
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+if [[ "$ENABLE_CORRECTION" == "true" ]]; then
+  alias cp='nocorrect cp'
+  alias ebuild='nocorrect ebuild'
+  alias gist='nocorrect gist'
+  alias heroku='nocorrect heroku'
+  alias hpodder='nocorrect hpodder'
+  alias man='nocorrect man'
+  alias mkdir='nocorrect mkdir'
+  alias mv='nocorrect mv'
+  alias mysql='nocorrect mysql'
+  alias sudo='nocorrect sudo'
+  alias su='nocorrect su'
+
+  setopt correct_all
+fi
+
 #######################################################
 #                       TODO
 #######################################################

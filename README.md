@@ -134,6 +134,17 @@ TBA
 
 Full bench – TBA
 
+## Tools
+
+## Upstream
+
+[OMZ core](https://github.com/ohmyzsh/ohmyzsh/commits/master/lib)
+
+### CLI
+
+[📋 Cut, copy, and paste anything, anywhere, all from the terminal](https://github.com/Slackadays/Clipboard)
+[](https://github.com/casey/just)
+
 ## TODO
 
 [Project Board](https://github.com/users/Jacke/projects/1)

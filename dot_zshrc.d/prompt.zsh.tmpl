@@ -1,0 +1,99 @@
+
+####################################################################################################################################
+##########################        **Powerlevel10k PROMPT**          ################################################################
+####################################################################################################################################
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+  if (is-macos); then
+    source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
+  fi
+  if (is-linux); then
+    source /opt/powerlevel10k/powerlevel10k.zsh-theme
+  fi
+  autoload -U promptinit; promptinit
+  # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+else
+  if (is-macos); then
+    source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
+  fi
+  if (is-linux); then
+    source /opt/powerlevel10k/powerlevel10k.zsh-theme
+  fi
+  autoload -U promptinit; promptinit
+  # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+fi
+####################################################################################################################################
+##########################             MOTD                         ################################################################
+####################################################################################################################################
+if exist $MOTD; then
+  if [[ -r "$HOME/Scripts/bin/cache_out" ]]; then
+    # eval "cache_out $MOTD" # Faster shell startup
+  else
+    # eval "$MOTD $MOTD_PARAMS"
+  fi
+fi
+####################################################################################################################################
+##########################         **Completion**                   ################################################################
+####################################################################################################################################
+function init_autocomplete() {
+  zinit wait'1' lucid for \
+  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+      zsh-users/zsh-syntax-highlighting \
+      marlonrichert/zsh-autocomplete \
+  blockf \
+    zsh-users/zsh-completions \
+  atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
+}
+
+function init_vanilla() {
+  zinit wait'1' lucid for \
+  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+      zsh-users/zsh-syntax-highlighting \
+  blockf \
+    zsh-users/zsh-completions \
+  atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
+  # ** [Vanilla OMZ completion](https://github.com/ohmyzsh/ohmyzsh/lib/completion.zsh) **
+  zplugin ice depth=1 wait'1' lucid
+  zplugin snippet OMZ::lib/completion.zsh
+}
+
+# case $COMPLETION in
+  # AUTOCOMPLETE)
+    # init_autocomplete
+    # ;;
+  # *)
+  # init_vanilla
+  # ;;
+# esac
+
+# TODO: Add fzf shell menu
+# ** [zsh-autocomplete](https://github.com/marlonrichert/zsh-autocomplete) **
+# ** [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) **
+# ** [fzf-tab](https://github.com/Aloxaf/fzf-tab) ** 
+# zinit light Aloxaf/fzf-tab NOT STABLE BECAUSE 
+# fzf-tab needs to be loaded after compinit, but before plugins which will wrap widgets, such as zsh-autosuggestions or fast-syntax-highlighting!!
+
+# TODO: Add sgortkey to disabled auto completion session based on ENV variable (easy as hell)
+# function completion-toggle() {
+  # if (( ${+POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND} )); then
+    # unset POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND
+  # else
+    # POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile|flux|fluxctl|stern|kubeseal|skaffold|kubent'
+  # fi#
+  # p10k reload
+  # if zle; then
+    # zle push-input
+    # zle accept-line
+  # fi
+# }
+# zle -N completion-toggle
+# bindkey '^]' completion-toggle  # Bind ctrl-] to toggle completion

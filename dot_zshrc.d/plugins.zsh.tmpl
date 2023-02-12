@@ -2,37 +2,39 @@
 ##########################      Plugins (handled by zinit)    ######################################################################
 ##########################      https://dotfiles.download     ######################################################################
 ####################################################################################################################################
-# ** [Oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) **
-source $ZSH/oh-my-zsh.sh
-# Extract cd completion and remove this shit
 # ** [Zinit Plugin Manager](https://github.com/zdharma-continuum/zinit) **
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
-fi
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
+# if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    # print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    # command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    # command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        # print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        # print -P "%F{160} The clone has failed.%f%b"
+# fi
+# source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+# autoload -Uz _zinit
+# (( ${+_comps} )) && _comps[zinit]=_zinit
+# zinit ice wait'2' lucid
+# zinit light-mode for \
+    # zdharma-continuum/zinit-annex-as-monitor \
+    # zdharma-continuum/zinit-annex-bin-gem-node \
+    # zdharma-continuum/zinit-annex-patch-dl \
+    # zdharma-continuum/zinit-annex-rust
+# ** [deffer](https://github.com/romkatv/zsh-defer) **
+# Deferred execution of Zsh commands
+# zinit ice wait'2' lucid
+# zinit light romkatv/zsh-defer
 ####################################################
 # Plugins                                          #
 ####################################################
 # Essential plugins
 #################
-# ** [ASDF](https://asdf-vm.com/) ** Manage multiple runtime versions with a single CLI tool
+# ** [ASDF](https://asdf-vm.com/) ** Manage multiple runtime versions with a single CLI tool **
 # Has extracted as a system package
 if (is-macos); then
-  source $(brew --prefix asdf)/libexec/asdf.sh
+  # zsh-defer source $(brew --prefix asdf)/libexec/asdf.sh
 fi
 if (is-linux); then
-  source ~/.asdf/asdf.sh
+  # zsh-defer source ~/.asdf/asdf.sh
 fi
 
 # ** [FZF](https://github.com/junegunn/fzf) ** fzf is a general-purpose command-line fuzzy finder
@@ -41,96 +43,72 @@ fi
 #  pick"/dev/null"
 # zinit light junegunn/fzf
 
-# ** [fzf-tab](https://github.com/Aloxaf/fzf-tab) ** 
-# Replace zsh's default completion selection menu with fzf!
-# zinit light Aloxaf/fzf-tab NOT STABLE BECAUSE 
-# fzf-tab needs to be loaded after compinit, but before plugins which will wrap widgets, such as zsh-autosuggestions or fast-syntax-highlighting!!
-
-# ** [fast-syntax-highlighting](https://github.com/zdharma-continuum/fast-syntax-highlighting) **
-# Syntax-highlighting for Zshell – fine granularity, number of features and multiple shipped themes
-# zplugin ice wait'1' lucid
-# zinit light zdharma-continuum/fast-syntax-highlighting
-# zplugin ice wait'1' lucid
-# zinit light zsh-users/zsh-completions
-# zplugin ice wait'1' lucid
-# zinit light zsh-users/zsh-autosuggestions
-# zinit light zsh-users/zsh-syntax-highlighting
-zinit wait'1' lucid for \
- atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-     zdharma-continuum/fast-syntax-highlighting \
- blockf \
-   zsh-users/zsh-completions \
-atload"!_zsh_autosuggest_start" \
-   zsh-users/zsh-autosuggestions
-
 # ** [fzf-zsh-plugin](https://github.com/unixorn/fzf-zsh-plugin) ** 
 # ZSH plugin to enable fzf searches of a lot more stuff - docker, tmux, homebrew and more
-zinit ice wait'2' lucid
-zinit light unixorn/fzf-zsh-plugin
+# TODO: Not stable, check
+# zinit ice wait'2' lucid
+# zinit light unixorn/fzf-zsh-plugin
 
 # ** [atuin](https://github.com/ellie/atuin) ** 🐢 Magical shell history
-zinit ice wait'2' lucid id-as"atuin_history" has"atuin" \
-      eval"atuin init zsh" run-atpull
-zinit light zdharma-continuum/null
+# zinit ice wait'2' lucid id-as"atuin_history" has"atuin" \
+#       eval"atuin init zsh" run-atpull
+# zinit light zdharma-continuum/null
+# zinit load ellie/atuin
 
 # ** [z-a-eval](https://github.com/NICHOLAS85/z-a-eval ) ** Eval scripts cache
-zinit ice wait'2' lucid
-zinit light NICHOLAS85/z-a-eval
+# zinit ice wait'2' lucid
+# zinit light NICHOLAS85/z-a-eval
 
 # ** [hist](https://github.com/marlonrichert/zsh-hist) ** History manager
-zplugin ice wait'2' lucid
-zinit light marlonrichert/zsh-hist
+# zplugin ice wait'2' lucid
+# zinit light marlonrichert/zsh-hist
 
 # ** [zoxide](https://github.com/ajeetdsouza/zoxide) **
 # A smarter cd command. Supports all major shells.
 # Has extracted as a system package
-zinit ice wait'2' lucid id-as"zoxide" has"zoxide" \
-      eval"zoxide init zsh" run-atpull
-zinit light ajeetdsouza/zoxide
+# zinit ice wait'1' lucid id-as"zoxide" has"zoxide" \
+#       eval"zoxide init zsh" run-atpull
+# zinit light ajeetdsouza/zoxide
 
 # ** [fd](https://github.com/sharkdp/fd) ** A simple, fast and user-friendly alternative to 'find'
-zinit ice wait'2' lucid as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd"
-zinit light sharkdp/fd
+# zinit ice wait'2' lucid as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd"
+# zinit light sharkdp/fd
 
-# ** [Alias advices](https://github.com/MichaelAquilina/zsh-you-should-use) **
-zinit ice wait'2' lucid
-zinit light MichaelAquilina/zsh-you-should-use
-
-# ** [direnv](https://direnv.net/) ** 
-# can load and unload environment variables depending on the current directory 
-zinit ice wait'2' lucid id-as"direnv_plugin" has"direnv" \
-      eval"direnv hook zsh" run-atpull
-zinit light zdharma-continuum/null
+# ** [direnv](https://direnv.net/) **
+# can load and unload environment variables depending on the current directory
+#zinit ice wait'2' lucid id-as"direnv_plugin" has"direnv" \
+      #eval"direnv hook zsh" run-atpull
+#zinit light zdharma-continuum/null
 
 # ** [TheFuck](https://github.com/nvbn/thefuck) Magnificent app which corrects your previous console command
-zinit ice wait'2' lucid id-as"thefuck_plugin" has"thefuck" \
-      eval"thefuck --alias" run-atpull
-zinit light zdharma-continuum/null
+# zinit ice wait'2' lucid id-as"thefuck_plugin" has"thefuck" \
+#       eval"thefuck --alias" run-atpull
+# zinit light zdharma-continuum/null
 
-# ** [zsh-thefuck](https://github.com/laggardkernel/zsh-thefuck) ** 
+# ** [zsh-thefuck](https://github.com/laggardkernel/zsh-thefuck) **
 # ZSH plugin with thefuck initialization and useful functions
-zinit ice wait'2' lucid
-zinit light laggardkernel/zsh-thefuck
+# zinit ice wait'1' lucid
+# zinit light laggardkernel/zsh-thefuck
 
 {{- if .extra_zsh_plugins }}
 ##############################
 # Additional plugins
 ##############################
 # ** [fzf-marks](https://github.com/urbainvaes/fzf-marks) ** Bookmarking with fzf
-zinit ice wait'2' lucid
-zinit light urbainvaes/fzf-marks
+# zinit ice wait'2' lucid
+# zinit light urbainvaes/fzf-marks
 
 # ** [Git Aliases](https://github.com/unixorn/git-extra-commands) **
-zinit ice wait'2' lucid
-zinit light unixorn/git-extra-commands
+# zinit ice wait'2' lucid
+# zinit light unixorn/git-extra-commands
 
 # ** [Zsh-Edit](https://github.com/marlonrichert/zsh-edit)** 
 # Zsh-Edit is a set of powerful extensions to the Zsh command line editor.
-  zinit ice wait'0b' lucid light compile'functions/*~*.zwc' \
-    trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
-      michaelxmcbride/zsh-dircycle \
-    blockf nocompletions compile'functions/*~*.zwc' \
-      marlonrichert/zsh-edit
+  #zinit ice wait'0b' lucid light compile'functions/*~*.zwc' \
+  #  trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
+  #    michaelxmcbride/zsh-dircycle \
+  #  blockf nocompletions compile'functions/*~*.zwc' \
+  #    marlonrichert/zsh-edit
 
 # ** [enhancd](https://github.com/b4b4r07/enhancd) ** 🚀 A next-generation cd command with your interactive filter
 # zinit ice wait'1' lucid pick'init.sh'
@@ -144,32 +122,27 @@ zinit light unixorn/git-extra-commands
 # zinit load zdharma-continuum/zbrowse
 
 # ** [icl](https://github.com/plainas/icl) ** An interactive memory aid for one-liners
-f_run_icl(){
-    icl_OUTPUT=$(icl)
-    print -z $icl_OUTPUT
-    zle accept-line # no idea if this is the way it's done
-}
-zle -N w_run_icl f_run_icl # create a widget
-bindkey ^T^M w_run_icl
-
-# ** [zzcomplete](https://github.com/zdharma-continuum/zzcomplete) ** 
-# Complete options from manual pages – press Ctrl-F to start the completer
-zinit ice wait'6' lucid
-zinit light zdharma-continuum/zzcomplete
+# f_run_icl(){
+    # icl_OUTPUT=$(icl)
+    # print -z $icl_OUTPUT
+    # zle accept-line # no idea if this is the way it's done
+# }
+# zle -N w_run_icl f_run_icl # create a widget
+# bindkey ^T^M w_run_icl
 
 # ** [forgit](https://github.com/wfxr/forgit) 💤 A utility tool powered by fzf for using git interactively.
-zinit ice wait'3' lucid
-zinit light wfxr/forgit
+# zinit ice wait'3' lucid
+# zinit light wfxr/forgit
 
 # ** [zsh-diff-so-fancy](https://github.com/zdharma-continuum/zsh-diff-so-fancy) ** Integrates diff-so-fancy to zsh
-zinit ice wait'3' as"program" pick"bin/git-dsf" lucid
-zinit light zdharma-continuum/zsh-diff-so-fancy
+# zinit ice wait'3' as"program" pick"bin/git-dsf" lucid
+# zinit light zdharma-continuum/zsh-diff-so-fancy
 
 # ** [Enhanced colors](https://github.com/zpm-zsh/colors) ** For Zsh
-zinit ice wait'3' lucid
-zinit light zpm-zsh/colors
-zplugin ice wait'3' lucid
-zinit light zpm-zsh/colorize
+# zinit ice wait'3' lucid
+# zinit light zpm-zsh/colors
+# zplugin ice wait'3' lucid
+# zinit light zpm-zsh/colorize
 
 ####################################################
 # Snippets                                         #
@@ -177,8 +150,8 @@ zinit light zpm-zsh/colorize
 # ** [broot](https://github.com/Canop/broot) ** 
 # A new way to see and navigate directory trees 
 if [ -d "$HOME/.config/broot/launcher/bash/br" ]; then
-  zplugin ice wait'5' lucid
-  zinit snippet "$HOME/.config/broot/launcher/bash/br"
+  # zplugin ice wait'5' lucid
+  # zinit snippet "$HOME/.config/broot/launcher/bash/br"
 fi
 
 # ** [envman](https://github.com/bitrise-io/envman) ** 
@@ -188,13 +161,20 @@ fi
 # ** [GNU Utils](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gnu-utils) ** 
 # This plugin binds GNU coreutils to their default names, so that you don't have to call them using their prefixed name, 
 # This is useful mainly macOS or FreeBSD
-zplugin ice wait'5' lucid
-zplugin snippet OMZ::plugins/gnu-utils/gnu-utils.plugin.zsh
+# zplugin ice wait'5' lucid
+# zplugin snippet OMZ::plugins/gnu-utils/gnu-utils.plugin.zsh
+
+# ** [zhooks](https://github.com/agkozak/zhooks) **
+# Display Zsh hook functions and arrays
+# zplugin ice wait'5' lucid
+# zplugin light agkozak/zhooks
+
 
 # ** [GPG agent](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gpg-agent) **
 # Enables GPG's gpg-agent if it is not running.
-zplugin ice wait'5' lucid
-zplugin snippet OMZ::plugins/gpg-agent/gpg-agent.plugin.zsh
+# TODO: NOT STABLE
+# zplugin ice wait'5' lucid
+# zplugin snippet OMZ::plugins/gpg-agent/gpg-agent.plugin.zsh
 
 # ** [Wasmer](https://github.com/wasmerio/wasmer) **
 # Run any code on any client. With WebAssembly and Wasmer
@@ -202,50 +182,59 @@ zplugin snippet OMZ::plugins/gpg-agent/gpg-agent.plugin.zsh
 # [ -s "$WASMER_DIR/wasmer.sh" ] && zinit snippet "$WASMER_DIR/wasmer.sh"
 
 # ** [postgres](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/postgres)
-zplugin ice wait'5' lucid
-zplugin snippet OMZ::plugins/postgres/postgres.plugin.zsh
+# zplugin ice wait'5' lucid
+# zplugin snippet OMZ::plugins/postgres/postgres.plugin.zsh
 
 # ** [copyfile](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/copyfile) **
-zplugin ice wait'5' lucid
-zplugin snippet OMZ::plugins/copyfile/copyfile.plugin.zsh
-
-# ** [sudo](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo) **
-zplugin ice wait'5' lucid
-zplugin snippet OMZ::plugins/sudo/sudo.plugin.zsh
+# zplugin ice wait'5' lucid
+# zplugin snippet OMZ::plugins/copyfile/copyfile.plugin.zsh
+# zplugin ice wait'5' lucid
+# zplugin snippet OMZ::plugins/copybuffer/copybuffer.plugin.zsh
+# zplugin ice wait'5' lucid
+# zplugin snippet OMZ::plugins/copypath/copypath.plugin.zsh
 
 # ** [fancy-ctrl-z](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/fancy-ctrl-z) **
 # Use Ctrl-Z to switch back to Vim
-zplugin ice wait'5' lucid
-zplugin snippet OMZ::plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh
+# zplugin ice wait'5' lucid
+# zplugin snippet OMZ::plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh
 
 # ** [spectrum](https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/spectrum.zsh) **
-zplugin ice depth=1 wait'5' lucid
-zplugin snippet OMZ::lib/spectrum.zsh
+# zplugin ice depth=1 wait'5' lucid
+# zplugin snippet OMZ::lib/spectrum.zsh
+
+# ** [compfix](https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/compfix.zsh) **
+# zplugin ice depth=1 wait'5' lucid
+# zplugin snippet OMZ::lib/compfix.zsh
 
 # ** [compleat](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/compleat) **
-zplugin ice wait'5' lucid
-zplugin snippet OMZ::plugins/compleat/compleat.plugin.zsh
+# zplugin ice wait'5' lucid
+# zplugin snippet OMZ::plugins/compleat/compleat.plugin.zsh
 
 # ** [cp](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/cp) **
-zplugin ice wait'5' lucid
-zplugin snippet OMZ::plugins/cp/cp.plugin.zsh
+# zplugin ice wait'5' lucid
+# zplugin snippet OMZ::plugins/cp/cp.plugin.zsh
 
 # ** [dircycle](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/dircycle) **
-zplugin ice wait'5' lucid
-zplugin snippet OMZ::plugins/dircycle/dircycle.plugin.zsh
+# zplugin ice wait'5' lucid
+# zplugin snippet OMZ::plugins/dircycle/dircycle.plugin.zsh
 
 # ** [extract](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/extract) **
-zplugin ice wait'5' lucid
-zplugin snippet OMZ::plugins/extract/extract.plugin.zsh
+# zplugin ice wait'5' lucid
+# zplugin snippet OMZ::plugins/extract/extract.plugin.zsh
 
 # ** [iterm-tab-colors](https://github.com/Jacke/iterm-tab-colors) **
 # Tabs automatically change colors depending on the folder you are in.
 if (is-macos); then
   if (exist python); then
-    zplugin ice wait'5' lucid
-    zplugin light Jacke/iterm-tab-colors
+    # zplugin ice wait'5' lucid
+    # zplugin light Jacke/iterm-tab-colors
   fi
 fi
+
+####################################################
+# External plugins
+####################################################
+# zsh-defer source ~/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 ####################################################
 # Unused                                           #

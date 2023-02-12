@@ -22,7 +22,7 @@ fi
 
 # ** Essentials **
 ## TODO: Replace it with unipack install Jacke/minimal-dotfiles
-brew install chezmoi zsh exa ccat zoxide atuin asdf the_silver_searcher neofetch
+brew install chezmoi zsh exa ccat zoxide atuin asdf the_silver_searcher neofetch fzf
 brew install romkatv/powerlevel10k/powerlevel10k
 
 if !(exist zinit); then
