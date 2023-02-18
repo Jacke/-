@@ -1,0 +1,76 @@
+#!/bin/zsh
+function gclcd() {
+  git clone --recurse-submodules $@
+  cd "$(basename "$_" .git)"
+}
+
+function most_used_commands() {
+  omz_history | awk '{print $2}' | sort | uniq -c | sort -nr | column -t | nl | head -n40
+}
+
+function mark() {
+  file="$HOME/.markfile"
+  [ -f $file ] || touch $file
+  if grep "^$1=" $file >/dev/null; then
+    sed -i -e "s:$1\=.*$:$1\=${PWD}:g" $file
+    echo "entry $1 changed"
+  else
+    echo "$1=$PWD" >>$file
+    echo "entry $1 added"
+  fi
+}
+
+function goto() {
+  file="$HOME/.markfile"
+  if [ $# -eq 1 ]; then
+    dest=$(grep "^$1=" $file | cut -d= -f2)
+    cd $dest
+  else
+    echo "no mark specified"
+  fi
+}
+
+function chwd() {
+  mark WORKING_DIR
+  touch "$HOME/.wdfile"
+}
+
+function clwd() {
+  if [[ -f "$HOME/.wdfile" ]]; then
+    rm "$HOME/.wdfile"
+  fi
+}
+
+function gtwd() {
+  if [[ -f "$HOME/.wdfile" ]] && [ -z "$TMUX" ]; then
+    goto WORKING_DIR
+  fi
+}
+
+function find-file() {
+  local FILE=$(fzf --preview-window=right:60% --preview='bat --color "always" {}')
+
+  if [ ! -z $FILE ]; then
+    $EDITOR $FILE
+  fi
+}
+
+function tre() {
+  local ignore_dirs=$(echo "$(cat .gitignore | sed '/^$/d' | sed '/^#/d' | sed '/[^/]$/d' | tr '\n' '|' | tr -d '/')renv|node_modules")
+  tree -I $ignore_dirs --dirsfirst $@
+}
+
+function history-all() {
+  history -E 1
+}
+
+# Cryptography
+function secret() {
+  output=~/"${1}".$(date +%s).enc
+  gpg --encrypt --armor --output ${output} -r $KEYID -r $EMAIL "${1}" && echo "${1} -> ${output}"
+}
+
+function reveal() {
+  output=$(echo "${1}" | rev | cut -c16- | rev)
+  gpg --decrypt --output ${output} "${1}" && echo "${1} -> ${output}"
+}

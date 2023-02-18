@@ -1,0 +1,4 @@
+name: "Dotfiles (~) CodeQL config"
+
+paths:
+  - .config

@@ -1,6 +1,9 @@
+####################################################################################################################################
+##########################        ** Dotfiles Shell Options **        ##############################################################
+####################################################################################################################################
 # GLOBDOTS lets files beginning with a . be matched without explicitly specifying the dot.
 # setopt globdots
-setopt auto_cd
+setopt auto_cd # cd by typing directory name if it's not a command
 setopt multios
 setopt prompt_subst
 
@@ -9,13 +12,21 @@ setopt prompt_subst
 unsetopt NOMATCH
 
 # ** MOTD executable **
-MOTD="neofetch"
-MOTD_PARAMS=""
+export MOTD="neofetch"
+export MOTD_PARAMS=""
 
 # ** Completion **
-# Empty = Vanilla OMZ completion
+# Empty ENV = Vanilla OMZ completion
 # AUTOCOMPLETE = zsh-autocomplete plugin (https://github.com/marlonrichert/zsh-autocomplete)
 COMPLETION={{ .prompt_completion }}
+# setopt correct_all # autocorrect commands
+# setopt auto_list # automatically list choices on ambiguous completion
+# setopt auto_menu # automatically use menu completion
+# setopt always_to_end # move cursor to end if word had one match
+# zstyle ':completion:*' menu select # select completions with arrow keys
+# zstyle ':completion:*' group-name '' # group results by category
+# zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
 
 # ** Correction **
-ENABLE_CORRECTION=true
+export ENABLE_CORRECTION=true
+

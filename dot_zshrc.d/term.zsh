@@ -102,12 +102,6 @@ function omz_termsupport_preexec {
   title "$CMD" "%100>...>${LINE}%<<"
 }
 
-autoload -Uz add-zsh-hook
-
-if [[ -z "$INSIDE_EMACS" || "$INSIDE_EMACS" = vterm ]]; then
-  add-zsh-hook precmd omz_termsupport_precmd
-  add-zsh-hook preexec omz_termsupport_preexec
-fi
 
 # Keep Apple Terminal.app's current working directory updated
 # Based on this answer: https://superuser.com/a/315029

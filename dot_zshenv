@@ -2,7 +2,9 @@
 ##########################            Env & Exports           ######################################################################
 ##########################      https://dotfiles.download     ######################################################################
 ####################################################################################################################################
-export DOTFILES_VERSION="1.0.1-RC1"
+export DOTFILES_VERSION="1.0.1-RC2"
+source "$HOME/.zshrc.d/utils.zsh"
+##############################################
 # Path                                       #
 ##############################################
 source "$HOME/.path"
@@ -29,7 +31,7 @@ if (( $+commands[nvim] )) && [[ -z "$GIT_EDITOR" ]] ; then
   export GIT_EDITOR="nvim"
 fi
 ####################################################
-# Permissions                                      # 
+# Permissions                                      #
 umask 022
 ####################################################
 # Browser                                          #
@@ -51,7 +53,7 @@ export HOMEBREW_INSTALL_BADGE='☕'
 if [ -n "$HTTP_TOOLKIT_ACTIVE" ]; then
     # When HTTP Toolkit is active, we inject various overrides into PATH
     export PATH="/Applications/HTTP Toolkit.app/Contents/Resources/app/httptoolkit-server/overrides/path:$PATH"
-    if command -v winpty >/dev/null 2>&1; then
+    if which winpty >/dev/null 2>&1; then
         # Work around for winpty's hijacking of certain commands
         alias php=php
         alias node=node

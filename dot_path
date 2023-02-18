@@ -5,25 +5,24 @@
 ####################################################
 # General                                          #
 ####################################################
-source "$HOME/.zshrc.d/core_functions.zsh"
 export PATH=/usr/local/bin:${PATH}:/sbin:/usr/local/sbin
 export PATH="$HOME/.local/bin:$PATH"
 ####################################################
 # Go Lang                                          #
 ####################################################
-(( ${+commands[go]} )) && export GOPATH="$HOME/go"
+exists go && export GOPATH="$HOME/go"
 # Uncomment it to set directry
 # export GOROOT="$HOME/.go"
 # export PATH="$GOPATH/bin:$PATH"
 # (( ${+commands[go]} )) && export PATH=${PATH}:`go env GOPATH`/bin
+
 ####################################################
 # Java                                             #
 ####################################################
 if [ -d $HOME/.sdkman ]; then
-  # source "$HOME/.sdkman/bin/sdkman-init.sh"
+  export SDKMAN_INIT="$HOME/.sdkman/bin/sdkman-init.sh"
 else
-  (( ${+commands[javac]} )) && export JAVA_HOME="$(/usr/libexec/java_home)"
-  (( ${+commands[javac]} )) && export PATH="${JAVA_HOME}/bin:${PATH}"
+  exists javac && export JAVA_HOME="$(/usr/libexec/java_home)" && export PATH="${JAVA_HOME}/bin:${PATH}"
 fi
 ####################################################
 # Rust                                             #
@@ -70,7 +69,7 @@ fi
 typeset -gU path
 ####################################################
 # User PATH                                        #
+# Add your ENV after this line                     #
+# to avoid merge conflicts                         #
 ####################################################
-# IGNORE START
 export PATH="$HOME/Dev/git-fuzzy/bin:$PATH"
-# IGNORE END

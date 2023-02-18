@@ -6,7 +6,7 @@ zmodload zsh/zprof
 ##############################################
 ##  Functions
 ##############################################
-# source "$HOME/.zshrc.d/functions.zsh"
+source "$HOME/.zshrc.d/functions.zsh"
 ##############################################
 ##  Options
 ##############################################
@@ -14,43 +14,49 @@ source "$HOME/.zshrc.d/options.zsh"
 ##############################################
 ##  History
 ##############################################
-# source "$HOME/.zshrc.d/history.zsh"
+source "$HOME/.zshrc.d/history.zsh"
 ##############################################
 ##  Colors & Highlight
 ###############################################
-# source "$HOME/.zshrc.d/colors.zsh"
+source "$HOME/.zshrc.d/colors.zsh"
 ##############################################
-##  Terminal utils
+##  Prompt & MOTD
 ###############################################
-# source "$HOME/.zshrc.d/term.zsh"
+source "$HOME/.zshrc.d/motd.zsh"
+source "$HOME/.zshrc.d/prompt.zsh"
 ##############################################
 ##  Plugins
 ##############################################
 source "$HOME/.zshrc.d/plugins.zsh"
 ##############################################
+##  Terminal utils
+###############################################
+source "$HOME/.zshrc.d/term.zsh"
+##############################################
 ##  Aliases
 ##############################################
-# source "$HOME/.zshrc.d/alias.zsh"
+source "$HOME/.zshrc.d/alias.zsh"
 ##############################################
 ##  Completions
 ###############################################
-# zsh-defer source "$HOME/.zshrc.d/completions.zsh"
+source "$HOME/.zshrc.d/completions.zsh"
 ##############################################
 ##  Directories
 ###############################################
-# source "$HOME/.zshrc.d/dirs.zsh"
+source "$HOME/.zshrc.d/dirs.zsh"
 ##############################################
-##  Key bindings
+##  Key bindingsπ
 ###############################################
-# source "$HOME/.zshrc.d/keybindings.zsh"
-##############################################
-##  Prompt & MOTD
-###############################################
-# zsh-defer eval "$(atuin init zsh)"
-source "$HOME/.zshrc.d/prompt.zsh"
+source "$HOME/.zshrc.d/keybindings.zsh"
 ##############################################
 ##  Line editor
 ###############################################
-# source "$HOME/.zshrc.d/line_editor.zsh"
+# TODO: (Add???) source "$HOME/.zshrc.d/line_editor.zsh"
+###############################################
+## Perf testing
+############################################### 
 # zprof
-# time  zsh -i -c exit
+#for i in {1..100}; do
+ #(time zsh -i -c exit) 2>&1 > /dev/null | grep -E -o -i '\d.\d\d\d';
+ #(time zsh -i -c exit) 2>&1 > /dev/null | sed 's/.* \([0-9].[0-9][0-9][0-9]\+\) .*/\1/'
+#done

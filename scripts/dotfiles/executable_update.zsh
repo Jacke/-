@@ -18,11 +18,11 @@
 function header() {
 	echo -e "$(tput sgr 0 1)$(tput setaf 6)$1$(tput sgr0)"
 }
-function exist() {
+function exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-function fn_exists() {
+function fun-exists() {
   whence -w $1 >/dev/null
 }
 
@@ -37,7 +37,7 @@ fi
 
 if [[ $OSTYPE == 'linux'* ]]; then
   header "Updating Linux..."
-  if (exist sudo); then
+  if (exists sudo); then
     sudo apt-get update
     sudo apt-get -y upgrade
   else
@@ -54,7 +54,7 @@ if [ -d $HOME/.zinit ]; then
 fi
 
 # Node
-if (exist npm); then
+if (exists npm); then
   header "Updating NodeJS packages..."
   npm upgrade -g
 fi

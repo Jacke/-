@@ -14,3 +14,5 @@ scripts/private
 .vscode/
 backup/
 TODO*
+TMP/
+.github/workflows/*.yml.sample

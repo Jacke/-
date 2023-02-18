@@ -2,10 +2,25 @@
 ##########################            Keybindings                   ################################################################
 ##########################      https://dotfiles.download           ################################################################
 ####################################################################################################################################
-# ^ is usually control
-# ^[ actually means Escape or Alt (or meta, if you like emacs)
+# ^  – Control
+# ^A - Control + A
+# ^[ - Escape or Alt
+#  ACTION:               DEFAULT    BINDINGS (NOTES):
+#    abort                 ctrl-c    ctrl-q  esc
+#    accept                enter
+#    backward-word         opt-left  shift-left
+#    beginning-of-line     ctrl-a    home
+#    clear-screen          ctrl-l
+#    down                  ctrl-j     ctrl-n  down
+#    end-of-line           ctrl-e     end
+#    forward-char          ctrl-f     right
+#    forward-word          alt-f      shift-right
+#    kill-line             ctrl-a
+#    kill-word             alt-d
+##############################################
 ##############################################
 # General                                    #
+bindkey-safe() { [[ -n "$1" ]] && bindkey -M $BIND_OPTION "$1" "$2" }
 bindkey -e
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
@@ -41,19 +56,5 @@ _quote-previous-word-in-double() {
   modify-current-argument '${(qqq)${(Q)ARG}}'
   zle vi-forward-blank-word
 }
-##############################################
-# Powerlevel10k                              #
-function kube-toggle() {
-  if (( ${+POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND} )); then
-    unset POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND
-  else
-    POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile|flux|fluxctl|stern'
-  fi
-  p10k reload
-  if zle; then
-    zle push-input
-    zle accept-line
-  fi
-}
-zle -N kube-toggle
-bindkey '^[' kube-toggle  # ctrl-] to toggle kubecontext in powerlevel10k prompt
+# FIXME: * Atuin *
+bindkey '^r' _atuin_search_widget

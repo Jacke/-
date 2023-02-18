@@ -15,8 +15,8 @@ alias hhistory="fc -rl 1 | fzf"
 alias j=z
 # alias ls="lsd --icon=never"
 alias ls="exa --no-icons"
-alias ohmyzsh="${EDITOR} ~/.oh-my-zsh"
 alias pip=pip3
+alias myip="curl https://ipinfo.io/ip"
 alias pp='pbpaste >'
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 alias re-run="fc -e nano -1"

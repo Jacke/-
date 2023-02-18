@@ -10,13 +10,13 @@ source <(curl -sL https://raw.githubusercontent.com/Jacke/-/main/scripts/dotfile
 
 # Install essential packages
 ## Git & Make
-if !(exist git); then
+if !(exists git); then
 	sudo softwareupdate -i -a
 	xcode-select --install
 fi
 
 # Homebrew package manager
-if !(exist brew); then
+if !(exists brew); then
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
@@ -25,7 +25,7 @@ fi
 brew install chezmoi zsh exa ccat zoxide atuin asdf the_silver_searcher neofetch fzf
 brew install romkatv/powerlevel10k/powerlevel10k
 
-if !(exist zinit); then
+if !(exists zinit); then
 	curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
 fi
 

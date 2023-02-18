@@ -10,14 +10,14 @@ export NO_EDIT=1
 export NO_TUTORIAL=1
 export NO_INPUT=1
 
-function exist() {
+function exists() {
     command -v "$1" >/dev/null 2>&1
 }
-function fn_exists() {
+function fun-exists() {
   whence -w $1 >/dev/null
 }
 
-function fn_exists() { declare -F "$1" > /dev/null; }
+function fun-exists() { declare -F "$1" > /dev/null; }
 
 function log() {
 	printf "\033[33;34m %s: %s\n" "$(date -u)" "$1"

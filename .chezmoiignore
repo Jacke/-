@@ -1,9 +1,10 @@
-README.md
+BENCHMARK.md
 CHANGELOG.md
-CONTRIBUTE.md
 CODE_OF_CONDUCT.md
+CONTRIBUTE.md
 CONTRIBUTING.md
 FAQ.md
+README.md
 TODO*
 LICENSE
 .github
@@ -27,3 +28,4 @@ scripts/private/**
 Dockerfile
 Brewfile
 backup/
+TMP/

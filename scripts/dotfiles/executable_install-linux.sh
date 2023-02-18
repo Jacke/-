@@ -16,7 +16,7 @@ fi
 PACKAGES="git zsh exa zoxide nano python3 python-pip silversearcher-ag wget neofetch fzf"
 ## TODO: Replace it with:
 #                       *> unipack install Jacke/minimal-dotfiles
-if (exist sudo); then
+if (exists sudo); then
 	sudo apt-get update
 	sudo apt-get -y install $PACKAGES
 else
@@ -25,18 +25,18 @@ else
 fi
 
 # Chezmoi – the best dotfiles manager
-if !(exist chezmoi); then
+if !(exists chezmoi); then
 	sh -c "$(curl -fsLS https://chezmoi.io/get)"
 	cp ./bin/chezmoi /bin/
 fi
 
 # Atuin – shell history app
-if !(exist atuin); then
+if !(exists atuin); then
 	bash <(curl https://raw.githubusercontent.com/ellie/atuin/main/install.sh)
 fi
 
 # Zinit – zsh plugin manager
-if !(exist zinit); then
+if !(exists zinit); then
 	export NO_EDIT=1
 	export NO_TUTORIAL=1
 	export NO_INPUT=1
