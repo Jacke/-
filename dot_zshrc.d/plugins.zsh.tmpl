@@ -38,8 +38,7 @@ zinit light romkatv/zsh-defer
 # zinit light zdharma-continuum/null
 # zinit load ellie/atuin*
 if (exists atuin); then
-  ATUIN_NOBIND=1
-  zsh-defer eval "$(atuin init zsh)"
+  zsh-defer eval "$(atuin init zsh --disable-up-arrow)"
 fi
 
 # ** [Google Cloud SDK]() **
@@ -96,6 +95,16 @@ fi
 if (exists direnv); then
   zsh-defer eval "$(direnv hook zsh)"
 fi
+
+# ** [zpair](https://github.com/hlissner/zsh-autopair) Auto-close and delete matching delimiters in zsh **
+zinit ice wait'2' lucid src"autopair.zsh"
+zinit light hlissner/zsh-autopair
+
+# ** [zsh-autoswitch-virtualenv](https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv)
+# ** 🐍 ZSH plugin to automatically switch python virtualenvs (including pipenv and poetry) as you move between directories **
+zinit ice wait'2' lucid
+zinit light MichaelAquilina/zsh-autoswitch-virtualenv
+
 #################
 # Call by plugin manager
 ######
@@ -109,14 +118,24 @@ zinit light marlonrichert/zsh-hist
 
 # ** [TheFuck](https://github.com/nvbn/thefuck) Magnificent app which corrects your previous console command
 # ** [zsh-thefuck](https://github.com/laggardkernel/zsh-thefuck) **
-# ZSH plugin with thefuck initialization and useful functions
+# ** ZSH plugin with thefuck initialization and useful functions **
 zinit ice wait'1' lucid
 zinit light laggardkernel/zsh-thefuck
+
+# ** [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) 
+# ** 🐠 ZSH port of Fish history search (up arrow)
+# zinit ice wait'1' lucid
+# zinit light zsh-users/zsh-history-substring-search
 
 {{- if .extra_zsh_plugins }}
 ##############################
 # Additional plugins
 ##############################
+# ** [zsh-autoswitch-virtualenv](https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv)
+# ** 🐍 ZSH plugin to automatically switch python virtualenvs (including pipenv and poetry) as you move between directories] **
+zinit ice wait'2' lucid
+zinit light MichaelAquilina/zsh-autoswitch-virtualenv
+
 # ** [FZF](https://github.com/junegunn/fzf) ** fzf is a general-purpose command-line fuzzy finder
 # zinit ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-bindings.zsh" \
  # atpull"%atclone" multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions" \
@@ -193,6 +212,10 @@ zplugin snippet OMZ::lib/spectrum.zsh
 # ** [compfix](https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/compfix.zsh) **
 zplugin ice depth=1 wait'5' lucid
 zplugin snippet OMZ::lib/compfix.zsh
+
+# ** [clipboard](https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/clipboard.zsh) **
+zplugin ice depth=1 wait'5' lucid
+zplugin snippet OMZ::lib/clipboard.zsh
 
 # ** [compleat](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/compleat) **
 zplugin ice wait'5' lucid

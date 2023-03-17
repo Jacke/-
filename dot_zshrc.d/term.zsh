@@ -1,3 +1,9 @@
+####################################################################################################################################
+##########################             Terminal Utilities             ##############################################################
+##########################         https://dotfiles.download          ##############################################################
+####################################################################################################################################
+# References:
+#
 # Set terminal window and tab/icon title
 #
 # usage: title short_tab_title [long_window_title]
@@ -102,11 +108,9 @@ function omz_termsupport_preexec {
   title "$CMD" "%100>...>${LINE}%<<"
 }
 
-
 # Keep Apple Terminal.app's current working directory updated
 # Based on this answer: https://superuser.com/a/315029
 # With extra fixes to handle multibyte chars and non-UTF-8 locales
-
 if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && [[ -z "$INSIDE_EMACS" ]]; then
   # Emits the control sequence to notify Terminal.app of the cwd
   # Identifies the directory using a file: URI scheme, including
@@ -127,4 +131,61 @@ if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && [[ -z "$INSIDE_EMACS" ]]; then
   add-zsh-hook precmd update_terminalapp_cwd
   # Run once to get initial cwd set
   update_terminalapp_cwd
+fi
+# terminal titles & vcs refresh
+case $TERM in
+  *xterm*)
+    precmd() {
+      print -nP "\033]0;%m: %3~\007"
+    }
+    preexec() {
+      print -nP "\033]0;%m: $1\007"
+    }
+  ;;
+  *screen*|*tmux*)
+    precmd() {
+      print -nP "\ek%3~\e\\"
+      print -nP "\e]0;%3~\a"
+      # session-name: dir
+      # print -nP "\033]0;${(C)$(tmux display-message -p '#S')}: %3~\007"
+      print -nP "\033]0;$(tmux display-message -p '#S'): %3~\007"
+    }
+    preexec() {
+      print -nP "\ek%3~ $1\e\\"
+      print -nP "\e]0;%3~ $1\a"
+      # session-name: cmd
+      # print -nP "\033]0;${(C)$(tmux display-message -p '#S')}: $1\007"
+      print -nP "\033]0;$(tmux display-message -p '#S'): $1\007"
+    }
+  ;;
+esac
+
+# change cursor depending on mode
+if [ "$TERM_PROGRAM" = "iTerm.app" -o "$TERM_PROGRAM" = "iTerm2.app" -o "$TERM_PROGRAM" = "Hyper" -o "$TERM_PROGRAM" = "kitty" ]; then
+  function zle-keymap-select zle-line-init {
+    if [[ $TMUX != "" ]]; then
+      case $KEYMAP in
+        vicmd)      print -n -- "\033Ptmux;\033\E]50;CursorShape=0\C-G\033\\";;
+        viins|main) print -n -- "\033Ptmux;\033\E]51;CursorShape=1\C-G\033\\";;
+      esac
+    else
+      case $KEYMAP in
+        vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;
+        viins|main) print -n -- "\E]51;CursorShape=1\C-G";;
+      esac
+    fi
+
+    zle reset-prompt
+    zle -R
+  }
+  zle -N zle-line-init
+  zle -N zle-keymap-select
+  function zle-line-finish {
+    if [[ $TMUX != "" ]]; then
+      print -n -- "\033Ptmux;\033\E]50;CursorShape=0\C-G\033\\"
+    else
+      print -n -- "\E]50;CursorShape=0\C-G"
+    fi
+  }
+  zle -N zle-line-finish
 fi

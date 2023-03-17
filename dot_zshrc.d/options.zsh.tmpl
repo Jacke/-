@@ -1,9 +1,9 @@
 ####################################################################################################################################
 ##########################        ** Dotfiles Shell Options **        ##############################################################
+##########################          https://dotfiles.download         ##############################################################
 ####################################################################################################################################
 # GLOBDOTS lets files beginning with a . be matched without explicitly specifying the dot.
 # setopt globdots
-setopt auto_cd # cd by typing directory name if it's not a command
 setopt multios
 setopt prompt_subst
 
@@ -23,7 +23,7 @@ COMPLETION={{ .prompt_completion }}
 # setopt auto_list # automatically list choices on ambiguous completion
 # setopt auto_menu # automatically use menu completion
 # setopt always_to_end # move cursor to end if word had one match
-# zstyle ':completion:*' menu select # select completions with arrow keys
+zstyle ':completion:*' menu select # select completions with arrow keys
 # zstyle ':completion:*' group-name '' # group results by category
 # zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
 

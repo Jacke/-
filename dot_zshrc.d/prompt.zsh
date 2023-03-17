@@ -1,15 +1,24 @@
 ####################################################################################################################################
 ##########################        ** Powerlevel10k Prompt **          ##############################################################
+##########################         https://dotfiles.download          ##############################################################
 ####################################################################################################################################
 # * To customize prompt, run `p10k configure` or edit ~/.p10k.zsh. *
-function dotfiles_p10k_init() {
+function dotfiles_p10k_init_theme() {
   if (is-macos); then
     source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
   fi
   if (is-linux); then
     source /opt/powerlevel10k/powerlevel10k.zsh-theme
   fi
+}
+
+function dotfiles_p10k_init_config() {
   [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+}
+
+function dotfiles_p10k_init() {
+  dotfiles_p10k_init_theme
+  dotfiles_p10k_init_config
 }
 
 function dotfiles_p10k_instant() {

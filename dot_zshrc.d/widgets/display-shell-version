@@ -1,0 +1,27 @@
+#####
+# Get output of shell version
+#####
+function zle_eval {
+    # echo -en "\e[2K\r"
+    # p10k display -r
+    #p10k display '*'=hide
+    # p10k display '1/left/(dir|vcs)'=hide
+    zle -I
+    echo $($SHELL --version)
+    # eval "$@"
+    # zle redisplay
+    #p10k display '*'=show
+    # p10k display '1/left/(dir|vcs)'=show
+}
+
+_display-shell-version() {
+  # display-shell-version
+  zle_eval $SHELL --version
+}
+zle -N _display-shell-version
+
+bindkey '^X^V' _display-shell-version
+
+# POWERLEVEL9K_TRANSIENT_PROMPT=off
+p10k-on-pre-prompt()  p10k display '*/right'=show
+p10k-on-post-prompt() p10k display '*/right'=hide

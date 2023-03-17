@@ -16,3 +16,4 @@ backup/
 TODO*
 TMP/
 .github/workflows/*.yml.sample
+*.zwc

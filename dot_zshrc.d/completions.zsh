@@ -19,6 +19,11 @@ if [[ "$ENABLE_CORRECTION" == "true" ]]; then
   alias mysql='nocorrect mysql'
   alias sudo='nocorrect sudo'
   alias su='nocorrect su'
+  if [ -f ~/.zsh_nocorrect ]; then
+      while read -r COMMAND; do
+          alias $COMMAND="nocorrect $COMMAND"
+      done < ~/.zsh_nocorrect
+  fi
   setopt correct_all
 fi
 ####################################################################################################################################

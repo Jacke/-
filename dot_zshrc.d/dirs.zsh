@@ -3,6 +3,7 @@
 ##########################      https://dotfiles.download           ################################################################
 ####################################################################################################################################
 # Changing/making/removing directory
+setopt auto_cd # cd by typing directory name if it's not a command
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushdminus

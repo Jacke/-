@@ -22,3 +22,9 @@ local magenta="%{${fg[magenta]}%}"
 local yellow="%{${fg[yellow]}%}"
 local gray="%{${fg[gray]}%}"
 local default="%{${fg[default]}%}"
+export ZSH_HIGHLIGHT_MAXLENGTH=512
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+export ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=blue,bold'
+export ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=red,bold'
+export ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=yellow,bold'
+export ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=magenta,bold'

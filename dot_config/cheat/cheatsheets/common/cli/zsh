@@ -453,6 +453,7 @@ echo ${file##*/}                   # echo just the file name (strip the path)
 echo ${texfilepath%/*.*}           # echo just the path (strip the file name)
 echo ${file%.*}                    # strip file extension
 echo $file:r                       # strip file extension
+echo ${file: -4}                   # strip last 4 chars of file
 echo ${0##*[!0-9]}                 # strip all but trailing digit from filename $0
 echo ${(M)0%%<->}                  # strip all but trailing digit from filename
 file=${1/\//C:\/}                  # substitute / with c:/ ANYWHERE in string

@@ -22,7 +22,7 @@ source "$HOME/.zshrc.d/colors.zsh"
 ##############################################
 ##  Prompt & MOTD
 ###############################################
-source "$HOME/.zshrc.d/motd.zsh"
+# source "$HOME/.zshrc.d/motd.zsh"
 source "$HOME/.zshrc.d/prompt.zsh"
 ##############################################
 ##  Plugins
@@ -31,7 +31,7 @@ source "$HOME/.zshrc.d/plugins.zsh"
 ##############################################
 ##  Terminal utils
 ###############################################
-source "$HOME/.zshrc.d/term.zsh"
+# source "$HOME/.zshrc.d/term.zsh"
 ##############################################
 ##  Aliases
 ##############################################
@@ -49,13 +49,17 @@ source "$HOME/.zshrc.d/dirs.zsh"
 ###############################################
 source "$HOME/.zshrc.d/keybindings.zsh"
 ##############################################
+##  Widgets
+##############################################
+source "$HOME/.zshrc.d/widgets.zsh"
+##############################################
 ##  Line editor
 ###############################################
 # TODO: (Add???) source "$HOME/.zshrc.d/line_editor.zsh"
 ###############################################
 ## Perf testing
 ############################################### 
-# zprof
+zprof > ~/zsh_perfomance/prof_"`date +"%s"`"
 #for i in {1..100}; do
  #(time zsh -i -c exit) 2>&1 > /dev/null | grep -E -o -i '\d.\d\d\d';
  #(time zsh -i -c exit) 2>&1 > /dev/null | sed 's/.* \([0-9].[0-9][0-9][0-9]\+\) .*/\1/'

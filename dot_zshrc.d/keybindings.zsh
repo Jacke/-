@@ -44,6 +44,13 @@ bindkey "\e\e[C" forward-word
 bindkey "^_" undo
 bindkey "^[q" push-line-or-edit
 bindkey "^[g" get-line
+bindkey -M menuselect '^[[Z' reverse-menu-complete # shift+tab
+# ** [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) 
+# ** 🐠 ZSH port of Fish history search (up arrow)
+if (zplugin-exists "zsh-users/zsh-history-substring-search"); then
+  bindkey '^[[A' history-substring-search-up
+  bindkey '^[[B' history-substring-search-down
+fi
 ##############################################
 # Custom                                    #
 zle -N insert-last-word smart-insert-last-word
@@ -56,5 +63,3 @@ _quote-previous-word-in-double() {
   modify-current-argument '${(qqq)${(Q)ARG}}'
   zle vi-forward-blank-word
 }
-# FIXME: * Atuin *
-bindkey '^r' _atuin_search_widget
