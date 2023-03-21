@@ -93,8 +93,6 @@ alias ydl='youtube-dl -x --audio-format mp3'
 ####################################################
 alias sbr="sbt run"
 alias todo=/usr/local/Cellar/node/14.3.0/lib/node_modules/leasot/bin/leasot
-alias nvim="/Users/stan/nvim-osx64/bin/nvim -u init.vim"
-alias vi='nvim'
 alias ggovm="$GOPATH/bin/g"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
 vv() {
   [ -z "$1" ] && code -r ./ && return 0;

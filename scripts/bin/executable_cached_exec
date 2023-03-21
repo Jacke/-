@@ -1,0 +1,117 @@
+#!/bin/bash
+#
+# Sort lines of text files and output the result to standard output.
+#
+# Usage: cached_exec [OPTION]... [CMD]...
+#
+# Options:
+#   -h, --help      display this help and exit
+#   -d, --drop      drop cache
+#   -e, --expire    set cache expiration in seconds
+#
+# If no FILE is specified, standard input is used.
+#
+# Examples:
+#   cached_exec -- uname -a
+#   cached_exec -d -- uname -a
+#   cached_exec -e 60 -- uname -a
+#
+# Written by Stan Sobolev @Jacke in 2022.
+PROG="$(basename $0)"
+CACHEDIR="${HOME}/.cache/${PROG}"
+function is-macos() { [[ "${OSTYPE}" == 'darwin'* ]]; }
+function is-linux() { [[ "${OSTYPE}" == 'linux'* ]]; }
+if is-macos; then DATE_BIN=/usr/local/bin/gdate; fi
+if is-linux; then DATE_BIN=date; fi
+# set -e -x
+usage() {
+    echo "Usage: $0 [OPTION]... -- [CMD]..."
+    echo "Sort lines of text FILE(s) and output the result to standard output."
+    echo
+    echo "Options:"
+    echo "  -h, --help      display this help and exit"
+    echo "  -d, --drop      drop cache"
+    echo "  -e, --expire    set cache expiration in seconds"
+    echo
+    exit
+}
+
+cached() {
+    CMD="$1"
+
+    EXPIRY=${EXPIRY:-600}  # default to 10 minutes, can be overriden
+    EXPIRE_DATE=$("$DATE_BIN" -Is -d "-$EXPIRY seconds")
+
+    HASH=$(echo "$CMD" | md5sum | awk '{print $1}')
+    mkdir -p "${CACHEDIR}"
+    CACHEFILE="$CACHEDIR/$HASH"
+
+    find "$CACHE" -type f -mmin +"$EXPIRY" -delete 2>/dev/null
+
+    if [[ -e $CACHEFILE ]] && [[ $("$DATE_BIN" -Is -r "$CACHEFILE") > $EXPIRE_DATE ]]; then
+        cat "$CACHEFILE"
+    else
+      if is-macos; then
+        script --flush --quiet --return /dev/null --command "$CMD" | tee "$CACHEFILE"
+      fi
+      if is-linux; then
+        script -q -r /dev/null $CMD | tee "$CACHEFILE"
+      fi
+    fi
+}
+
+drop() {
+    HASH=$(echo "$1" | md5sum | awk '{print $1}')
+    CACHEFILE="$CACHEDIR/$HASH"
+
+    if [[ -e "$CACHEFILE" ]]; then
+      rm $CACHEFILE
+      echo "'$1' cache has dropped"
+    fi
+
+    exit 0
+}
+
+SHORT=d,e:,h
+LONG=drop,expire:,help
+OPTS=$(getopt -a -n cached_exec --options $SHORT --longoptions $LONG -- "$@")
+
+IS_VALID=$?
+VALID_ARGUMENTS=$# # Returns the count of arguments that are in short or long options
+
+if [[ "$VALID_ARGUMENTS" == 0 || "$IS_VALID" != 0 ]]; then
+  usage
+fi
+
+eval set -- "$OPTS"
+
+while :
+do
+  case "$1" in
+    -e | --expire )
+      EXPIRY="$2";
+      shift 2
+      ;;
+    -d | --drop )
+      shift 2
+      drop "$*"
+      ;;
+    -h | --help)
+      usage
+      ;;
+    --)
+      shift;
+      CMD_ARGUMENTS=$#
+      if [[ "$CMD_ARGUMENTS" == 0 ]]; then
+        usage
+      fi
+      cached "$*";
+      break
+      ;;
+    *)
+      echo "Unexpected option: $1"
+      usage
+      ;;
+  esac
+done
+

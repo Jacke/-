@@ -53,7 +53,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Dotfile Scripts                                  #
 ####################################################
 if (is-macos); then
-  export PATH="$HOME/Scripts/bin:$PATH"
+  export PATH="$HOME/Scripts/bin:/usr/local/opt/gnu-getopt/bin:$PATH"
 fi
 if (is-linux); then
   export PATH="$HOME/scripts/bin:$PATH"

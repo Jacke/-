@@ -101,6 +101,7 @@ case $COMPLETION in
   ;;
 esac
 
+# TODO: Add completion as compdef _gnu_generic cached_exec
 # TODO: Add sgortkey to disabled auto completion session based on ENV variable (easy as hell)
 # function completion-toggle() {
   # if (( ${+POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND} )); then

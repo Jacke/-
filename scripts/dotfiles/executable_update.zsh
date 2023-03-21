@@ -25,9 +25,16 @@ function exists() {
 function fun-exists() {
   whence -w $1 >/dev/null
 }
+function render-logo() {
+  less -FX $1/misc/dotfiles-update-logo
+}
 
 # TODO: Update arguments
 # dotfiles-update [all | plugins | system | ...]
+CURRENT_PATH=$(realpath $0)
+DIR_PATH=$(dirname $CURRENT_PATH)
+render-logo $DIR_PATH
+
 
 if [[ $OSTYPE == 'darwin'* ]]; then
   header "Updating macOS..."
