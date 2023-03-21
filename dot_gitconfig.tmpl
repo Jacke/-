@@ -1,21 +1,10 @@
-[user]
-	name = {{ .name }}
-	email = {{ .email }}
-{{- if .gpgsign }}
-	signingkey = {{ .signkey_id }}
-	#signinkey = {{ .signkey_id2 }}
-	#email = {{ .email2 }}
-{{- end }}
-
 [alias]
-# *********************
-# Rebase workflow
   mainbranch = "!git remote show origin | sed -n '/HEAD branch/s/.*: //p'"
   synced = "!git pull origin $(git mainbranch) --rebase"
   update = "!git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase"
   squash = "!git rebase -v -i $(git mainbranch)"
   publish = push origin HEAD --force-with-lease
-  pub = publish 
+  pub = publish
   a = add
   aa = !git ls-files -d | xargs git rm && git ls-files -m -o --exclude-standard | xargs git add
   ad  = add
@@ -25,7 +14,6 @@
   adu = !git diff --name-only --cached | fzf -m --print0 | xargs -0 git restore --staged
   ag = "!sh -c 'git ls-files -m -o --exclude-standard | grep $1 | xargs git add --all' -"
   amend = commit -a --amend
-  amend = commit --amend -v
   assume = update-index --assume-unchanged
   assume-unchanged = update-index --assume-unchanged
   assumed = "!git ls-files -v | grep ^h | cut -c 3-"
@@ -44,10 +32,6 @@
   cm  = commit --verbose
   cnv = commit --no-verify
   co = checkout
-  co  = checkout
-  co = checkout
-  co = checkout
-  cob = checkout -b
   cob = checkout -b
   coc = !git branch | fzf | xargs git checkout
   cof = !git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 git checkout
@@ -79,7 +63,6 @@
   la = "!git config -l | grep alias | cut -c 7-"
   latest = "!git for-each-ref --sort='-committerdate' --format='%(color:red)%(refname)%(color:reset)%09%(committerdate)' refs/remotes | sed -e 's-refs/remotes/origin/--' | less -XFR"
   lf  = !git lfs install
-  lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   lg  = log --stat
   lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
@@ -125,10 +108,8 @@
   sp  = !git stash pop `git stash list | awk -F':' '{print $1}' | fzf --preview 'git -c color.ui=always stash show -p {}'`
   squash = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
   ss  = stash save
-  ss  = status
   st  = status
   su  = ls-files --others --exclude-standard
-  su = submodule update
   sub = "!git submodule sync && git submodule update"
   ub = branch -f --no-track
   ulf = !git lfs uninstall && touch **/* && git commit -a
@@ -143,40 +124,94 @@
   vi  = !nvim ~/.gitconfig
   wdiff = diff --color-words
   wshow = show --color-words
-
+[apply]
+	# Detect whitespace errors when applying a patch
+	whitespace = fix
+[blame]
+  date = human
+[branch]
+  # Show most recently changed branches first.
+  sort = -committerdate
+  autosetuprebase = always
+[branch "master"]
+  remote = origin
+  merge = refs/heads/master
+	mergeoptions = --no-edit
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+  github = {{ .github_login }}
+{{- if .gpgsign }}
+	signingkey = {{ .signkey_id }}
+  {{- if .gpgsign2 }}
+    signinkey = {{ .signkey_id2 }}
+    email = {{ .email2 }}
+  {{- end }}
+{{- end }}
 [core]
   attributesfile = ~/.gitattributes
   excludesfile = "~/.gitignore"
-  hooksPath = ~/.git_template
+  hooksPath = ~/.config/git/template
   pager = delta
   editor = code --wait
-  abbrev = 9
-
+  preloadindex = true
+  abbrev = 12
+  autocrlf = input
+	# Make `git rebase` safer on OS X
+	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	trustctime = false
+	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
+	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
+	precomposeunicode = false
+	# Speed up commands involving untracked files such as `git status`.
+	# https://git-scm.com/docs/git-update-index#_untracked_cache
+	untrackedCache = true
+	ignorecase = false
+	commitGraph = true
+	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
+	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
+	precomposeunicode = false
+	whitespace = fix
+	pager = diff-so-fancy | less --tabs=4 -RFX
+	autocrlf = input
+	quotepath = false
 [color]
-  ui = true
   diff = auto
   branch = auto
   status = auto
   showbranch = auto
-
+  interactive = auto
+  grep = auto
+  ui = auto
 [color "branch"]
-  local = green
-  remote = red
-  current = green reverse
-
+	current = yellow reverse
+	local = yellow
+	remote = green
 [color "diff"]
-  old = red bold
-  new = green bold
-  meta = yellow bold
-  frag = magenta bold
-
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
 [commit]
   gpgsign = {{ .gpgsign }}
-  template = ~/.git_template/commit-template
-
+  template = ~/.config/git/template/commit
+{{ if eq .chezmoi.os "darwin" }}
 [credential]
   helper = osxkeychain
-
+[credential "https://gist.github.com"]
+  helper = !/usr/bin/gh auth git-credential
+{{ end }}
+[help]
+  autocorrect = 1 # Automatically correct and execute mistyped commands
 [delta]
   line-numbers = true
   plus-color = "#012800"
@@ -185,11 +220,9 @@
   features = unobtrusive-line-numbers decorations
   whitespace-error-style = 22 reverse
   syntax-theme = base16-256
+  navigate = true
 [delta "unobtrusive-line-numbers"]
   line-numbers = true
-  # line-numbers-minus-style = "#444444"
-  # line-numbers-zero-style = "#444444"
-  # line-numbers-plus-style = "#444444"
   line-numbers-left-format = "{nm:>4}┊"
   line-numbers-right-format = "{np:>4}│"
   line-numbers-left-style = blue
@@ -198,31 +231,139 @@
   commit-decoration-style = bold yellow box ul
   file-style = bold yellow ul
   file-decoration-style = none
+	commit-style = raw
   hunk-header-decoration-style = yellow box
-[interactive]
-  diffFilter = delta --color-only
-[merge]
-  ff            = false
-  conflictstyle = diff3
-  tool          = vimdiff
-[mergetool]
+	hunk-header-file-style = red
+	hunk-header-line-number-style = "#067a00"
+	hunk-header-style = file line-number syntax
+[delta "interactive"]
+	keep-plus-minus-markers = false
+[diff]
+	renames = copies # Detect copies as well as renames
+  algorithm = histogram
+  colorMoved = default
+  colorMoved = default
+  guitool = meld
+  mnemonicprefix = true
+  noprefix = true
+  prompt = true
+  submodule = log
+  tool = delta
+[diff "bin"]
+  textconv = hexdump -v -C
+[diff "hex"]
+  textconv = hexdump -v -C
+  binary = true
+[diff "zip"]
+  textconv = unzip -v
+[diff "pdf"]
+  textconv = mdls
+[diff "sopsdiffer"]
+  textconv = sops -d
+[diff "plist"]
+  textconv = plutil -convert xml1 -o -
+[difftool]
   prompt = false
-  keepBackup = false
-[mergetool "vimdiff"]
-  path   = nvim
+[difftool "delta"]
+  cmd = delta $LOCAL $REMOTE
+[difftool "nvimdiff"]
+  cmd = nvim -d $LOCAL $REMOTE
+[difftool "Kaleidoscope"]
+  cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[rebase]
+  autosquash = true
+  autostash = true
+[remote "origin"]
+  prune = true
+[rerere]
+  enabled = true
+[init]
+	defaultBranch = main
+	templateDir = ~/.config/git/template/
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+[pager]
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
+[push]
+  default = simple
+  followTags = true
 [pull]
+  rebase = true
+  autostash = true
   ff = only
 [github]
   token = {{ .github_token }}
+  user = {{ .github_login }}
 [gpg]
-  program = gpg2
+  program = gpg
+[grep]
+  lineNumber = true
+  patternType = extended
+  extendRegexp = true
+  lineNumber = true
 [ghq]
   vcs = github
   root = ~/Dev/_GitHub
-# [url "git@github.com:"]
-#   insteadOf = https://github.com/
+[fetch]
+  prune = true
+[filter "gitignore"]
+  clean = "sed '/#gitignore$/'d"
+  smudge = cat
 [filter "lfs"]
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
+[filter "media"]
+  clean = git-media-clean %f
+  smudge = git-media-smudge %f
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
+[status]
+  showUntrackedFiles = all
+[stash]
+  showPatch = true
+[log]
+  date = local
+  decorate = full
+[merge]
+	log           = true # Include summaries of merged commits in newly created merge commit messages
+  ff            = false
+  conflictstyle = diff3
+	tool = meld
+	prompt = true
+  stat = true
+[merge "ours"]
+  driver = true
+[mergetool]
+  prompt = false
+  keepBackup = false
+[mergetool "nvimdiff"]
+  cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+  trustExitCode = true
+[mergetool "meld"]
+  cmd = meld $LOCAL $BASE $REMOTE --output=$MERGED --auto-merge
+[mergetool "Kaleidoscope"]
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+  trustExitCode = true
+[url "git@github.com:github"]
+	insteadOf = "https://github.com/github"
+	insteadOf = "github:github"
+	insteadOf = "git://github.com/github"
+[url "git@github.com:"]
+	pushInsteadOf = "https://github.com/"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+	insteadOf = "github:"
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"

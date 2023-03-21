@@ -16,16 +16,21 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
 {{- if $codespaces }}{{/* Codespaces dotfiles setup is non-interactive */}}
     email = ""
     gpgsign = true
+    gpgsign2 = false
 {{- else }}{{/* Interactive setup */}}
     {{- $email := promptString "Email" -}}
     {{- $gpgsign := promptBool "GPG Support" false}}
+    {{- $gpgsign2 := promptBool "GPG Second key" false}}
     email = {{ $email | quote }}
     gpgsign = {{ $gpgsign }}
+    gpgsign2 = {{ $gpgsign2 }}
 {{- if $gpgsign }}
     {{- $signkey_id := promptString "GPG Key ID" }}
-    {{- $signkey_id2 := promptString "GPG Key ID #2" "" }}
-    {{- $email2 := promptString "Additional Email" "" }}
     signkey_id = {{ $signkey_id | quote }}
+{{- end }}
+{{- if $gpgsign2 }}
+    {{- $signkey_id2 := promptString "GPG Second Key ID" "" }}
+    {{- $email2 := promptString "GPG Second Key Email" "" }}
     signkey_id2 = {{ $signkey_id2 | quote }}
     email2 = {{ $email2 | quote -}}
 {{- end }}

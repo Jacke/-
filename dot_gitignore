@@ -1,68 +1,233 @@
 # Global gitignore.
-
-# Vim
-.*.s[a-w][a-z]
-Session.vim
-.netrwhist
-.XTabline*
-
-# Mac OS X
-.DS_Store
-.AppleDouble
-.LSOverride
-._*
-
-# Linux
+# Useful `.gitignore` templates:
+# https://github.com/github/gitignore
+# ----------------------------------------------------------------------
+# | Linux                                                              |
+# ----------------------------------------------------------------------
+.directory
 .fuse_hidden*
 .nfs*
-
-# Windows
-Thumbs.db
-
-# Python, Virtualenv
-.venv*
-.mypy_cache
-__pycache__
-*.py[cod]
-.condaenv
-
-# Etc
-npm-debug.log
-
-# Log files
-events.out.tfevents.*
-
-# Icon must end with two \r
-Icon
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
+.Trash-*
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+*.sw[a-p]
+*~
+#.*
+# ----------------------------------------------------------------------
+# | Miscellaneous                                                      |
+# ----------------------------------------------------------------------
+# Node.js, npm, and yarn.
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# ----------------------------------------------------------------------
+# | macOS                                                              |
+# ----------------------------------------------------------------------
+._*
+.AppleDouble
+.DS_Store
+.localized
+.LSOverride
 .Spotlight-V100
-.TemporaryItems
 .Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
 # Directories potentially created on remote AFP share
+.apdisk
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
-.apdisk
-
-# IDE
-.idea/
+# Files that might appear in the root of a volume
+!.config/TabNine/tabnine_config.json
+.com.apple.timemachine.donotpresent
+.config/karabiner/automatic_backups
+.config/TabNine/*
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+id_rsa*
+known_hosts
+# ----------------------------------------------------------------------
+# | Windows                                                            |
+# ----------------------------------------------------------------------
+Desktop.ini
+ehthumbs.db
+Thumbs.db
+# ----------------------------------------------------------------------
+# | Python, Virtualenv                                                 |
+# ----------------------------------------------------------------------
+__pycache__
+.condaenv
+.mypy_cache
+.venv*
+*.py[co]
+*.py[cod]
+# Packages
+.coverage
+.installed.cfg
+.pyre/
+.pytype/
+.tox
+*.egg
+*.egg-info
+*$py.class
+#bin
+#build
+#develop-eggs
+#dist
+#eggs
+#parts
+pip-log.txt
+# ---------------------------------------------------------------------
+# Ruby
+# ---------------------------------------------------------------------
+.bundle
+.config
+*.gem
+*.rbc
+#coverage
+#lib/bundler/man
+#rdoc
+# YARD artifacts
+_yardoc
+.yardoc
+#doc/
+# ----------------------------------------------------------------------
+# | PHP                                                                |
+# ----------------------------------------------------------------------
+.phpactor.yml
+phpunit.xml.dist
+# ----------------------------------------------------------------------
+# | Java, Kotlin and JVM-based languages                               |
+# ----------------------------------------------------------------------
+# Compiled class file
+*.class
+# Log file
+*.log
+# BlueJ files
+*.ctxt
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
+# Clojure
+.clj-kondo
+# ----------------------------------------------------------------------
+# | Node                                                               |
+# ----------------------------------------------------------------------
+npm-debug.log
+# ----------------------------------------------------------------------
+# | Logs                                                               |
+# ----------------------------------------------------------------------
+events.out.tfevents.*
+# ----------------------------------------------------------------------
+# | IDE                                                                |
+# ----------------------------------------------------------------------
+.classpath
 .directory/
+.idea/
+.ipynb_checkpoints/
+.project
+.settings/
 .vscode/
 *.iml
-.project
-.classpath
-.settings/
-.ipynb_checkpoints/
+# Xcode
+!default.mode1v3
+!default.mode2v3
+!default.pbxuser
+!default.perspectivev3
+*.hmap
+*.ipa
+*.mode1v3
+*.mode2v3
+*.moved-aside
+*.pbxuser
+*.perspectivev3
+*.xccheckout
+*.xcuserstate
+*.xcworkspace/xcshareddata
+build/
+DerivedData
+xcuserdata
+# ----------------------------------------------------------------------
+# | C/ C++                                                              |
+# ----------------------------------------------------------------------
+.cquery
+compile_commands.json
+# C extensions
+*.so
+.ccls-cache/
+# ----------------------------------------------------------------------
+# | Vim                                                                |
+# ----------------------------------------------------------------------
+.*.s[a-w][a-z]
+.netrwhist
+.vim/bundle/
+.vim/ftdetect/Dockerfile.vim
+.vim/snippets/
+.vim/syntax/Dockerfile.vim
+.vimrc_sample
 .vimspector.json
-
-# Vim swap file.
-.swp
-
-./Scripts/private/
+.XTabline*
+*.un~
+%*
+Session.vim
+# ---------------------------------------------------------------------
+# emacs
+# ---------------------------------------------------------------------
+\#*\#
+.elc
+/.emacs.desktop
+/.emacs.desktop.lock
+auto-save-list
+tramp
+# lsp files
+.lsp
+# ---------------------------------------------------------------------
+# VSCode
+# ---------------------------------------------------------------------
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
+.vscode/*
+# ----------------------------------------------------------------------------------------------
+# Temp files
+# ----------------------------------------------------------------------------------------------
+.sass-cache/
+*.swp
+jmeter.log
+# ----------------------------------------------------------------------------------------------
+# Development
+# ----------------------------------------------------------------------------------------------
+# Direnv
+.env
+.envrc
+.lock
+# Docker
+docker-compose.override.yml
+# Devdash config for each projects
+.devdash
+# Ansible
+*.retry
+# Vagrant
+.vagrant/
+# Trick for some tools (ripgrep) using these pattern to ignore files
+.git/
+# ----------------------------------------------------------------------
+# | Dotfiles scripts                                                   |
+# ----------------------------------------------------------------------
+~/Scripts/private/
