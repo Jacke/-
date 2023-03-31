@@ -1,1 +1,1 @@
-echo "Is it working?"
+p10k reload && echo "It works"

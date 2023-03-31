@@ -1,9 +1,7 @@
 # Bye
 echo "Bye"
 
-echo "run install again, bro"
-echo "I'm serious"
-echo "source <(curl -sL dotfiles.download/install)"
+# TODO: Add uninstall logic
 
 echo 'Copy and paste + enter'
 echo 'I need a feedback: https://github.com/Jacke/-/issues/new/choose'

@@ -1,10 +1,10 @@
 {{- $codespaces:= env "CODESPACES" | not | not -}}
 sourceDir = {{ .chezmoi.sourceDir | quote }}
-{{- $fname := promptString "First name" "John" -}}
-{{ $lname := promptString "Last name" "Doe" }}
-{{ $full := promptBool "Extra system packages" true }}
-{{- $prompt_completion := promptString "Empty for default OR AUTOCOMPLETE for zsh-autocomplete plugin" "" -}}
-{{- $extra_zsh_plugins := promptBool "Enable additional zsh plugins" false -}}
+{{- $fname := promptString "fname" "John" -}}
+{{ $lname := promptString "lname" "Doe" }}
+{{ $extra_pkgs := promptBool "extra_pkgs" true }}
+{{- $prompt_completion := promptString "prompt_completion" "" -}}
+{{- $extra_zsh_plugins := promptBool "extra_zsh_plugins" false -}}
 
 [data]
     fname = {{ $fname | quote }}
@@ -18,24 +18,27 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     gpgsign = true
     gpgsign2 = false
 {{- else }}{{/* Interactive setup */}}
-    {{- $email := promptString "Email" -}}
-    {{- $gpgsign := promptBool "GPG Support" false}}
-    {{- $gpgsign2 := promptBool "GPG Second key" false}}
+    {{- $email := promptString "email" -}}
+    {{- $gpgsign := promptBool "gpgsign" false}}
+    {{- $gpgsign2 := false}}
+{{- if $gpgsign }}
+    {{- $gpgsign2 := promptBool "gpgsign2" false}}
+{{- end }}
     email = {{ $email | quote }}
     gpgsign = {{ $gpgsign }}
     gpgsign2 = {{ $gpgsign2 }}
 {{- if $gpgsign }}
-    {{- $signkey_id := promptString "GPG Key ID" }}
+    {{- $signkey_id := promptString "signkey_id" }}
     signkey_id = {{ $signkey_id | quote }}
 {{- end }}
 {{- if $gpgsign2 }}
-    {{- $signkey_id2 := promptString "GPG Second Key ID" "" }}
-    {{- $email2 := promptString "GPG Second Key Email" "" }}
+    {{- $signkey_id2 := promptString "signkey_id2" "" }}
+    {{- $email2 := promptString "email2" "" }}
     signkey_id2 = {{ $signkey_id2 | quote }}
     email2 = {{ $email2 | quote -}}
 {{- end }}
-    {{- $github_login := promptString "Github Username" "Not defined" }}
-    {{- $github_token := promptString "Github API Token" "Not defined" }}
+    {{- $github_login := promptString "github_login" "Empty" }}
+    {{- $github_token := promptString "github_token" "Empty" }}
     github_login = {{ $github_login  | quote }}
     github_token = {{ $github_token  | quote }}
 {{- end }}

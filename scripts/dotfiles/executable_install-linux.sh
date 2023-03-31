@@ -1,42 +1,42 @@
-#!/bin/bash
+#!/bin/zsh
 ### Dotfiles (iam) project v1.0.0
 ### [Stan S](https://github.com/Jacke/-)
 ### Copyright 2020-2022
 ### <\*/>
-
+set -euo pipefail
 if [[ "$DOCKER" -eq 1 ]]; then
 	full_path=$(realpath $0)
 	dir_path=$(dirname $full_path)
-	source $dir_path/../scripts/dotfiles/executable_install-common.sh
+	source $INSTALL_COMMON
 else
 	source <(curl -sL https://raw.githubusercontent.com/Jacke/-/main/scripts/dotfiles/executable_install-common.sh)
 fi
 
 # Install essential packages
-PACKAGES="git zsh exa zoxide nano python3 python-pip silversearcher-ag wget neofetch fzf"
+PACKAGES="git zsh exa zoxide nano python3 python-pip silversearcher-ag wget fzf"
 ## TODO: Replace it with:
 #                       *> unipack install Jacke/minimal-dotfiles
-if (exists sudo); then
+if exists sudo; then
 	sudo apt-get update
-	sudo apt-get -y install $PACKAGES
+	sudo apt-get -y install git zsh exa zoxide nano python3 python-pip silversearcher-ag wget fzf
 else
 	apt-get update
-	apt-get -y install $PACKAGES
+	apt-get -y install git zsh exa zoxide nano python3 python-pip silversearcher-ag wget fzf
 fi
 
 # Chezmoi – the best dotfiles manager
-if !(exists chezmoi); then
+if ! exists chezmoi; then
 	sh -c "$(curl -fsLS https://chezmoi.io/get)"
 	cp ./bin/chezmoi /bin/
 fi
 
 # Atuin – shell history app
-if !(exists atuin); then
+if ! exists atuin; then
 	bash <(curl https://raw.githubusercontent.com/ellie/atuin/main/install.sh)
 fi
 
 # Zinit – zsh plugin manager
-if !(exists zinit); then
+if ! exists zinit; then
 	export NO_EDIT=1
 	export NO_TUTORIAL=1
 	export NO_INPUT=1

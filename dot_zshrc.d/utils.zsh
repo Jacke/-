@@ -17,4 +17,4 @@ function autoload-executables-in-dir() {
 function source-if-exists() {
   [[ -e "$1" ]] && source "$1"
 }
-source-if-exists "$HOME/.zshrc.d/functions/common"
+source-if-exists "$HOME/.zshrc.d/functions/collections/common"

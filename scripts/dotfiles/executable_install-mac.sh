@@ -3,10 +3,14 @@
 ### [Stan S](https://github.com/Jacke/-)
 ### Copyright 2020-2022
 ### <\*/>
-
-full_path=$(realpath $0)
-dir_path=$(dirname $full_path)
-source <(curl -sL https://raw.githubusercontent.com/Jacke/-/main/scripts/dotfiles/executable_install-common.sh)
+set -euo pipefail
+if [[ "$DOCKER" -eq 1 ]]; then
+	full_path=$(realpath $0)
+	dir_path=$(dirname $full_path)
+	source $INSTALL_COMMON
+else
+	source <(curl -sL https://raw.githubusercontent.com/Jacke/-/main/scripts/dotfiles/executable_install-common.sh)
+fi
 
 # Install essential packages
 ## Git & Make

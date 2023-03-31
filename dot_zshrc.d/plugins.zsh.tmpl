@@ -100,11 +100,12 @@ fi
 zinit ice wait'2' lucid src"autopair.zsh"
 zinit light hlissner/zsh-autopair
 
-# ** [zsh-autoswitch-virtualenv](https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv)
-# ** 🐍 ZSH plugin to automatically switch python virtualenvs (including pipenv and poetry) as you move between directories **
-zinit ice wait'2' lucid
-zinit light MichaelAquilina/zsh-autoswitch-virtualenv
-
+if (exists python); then
+  # ** [zsh-autoswitch-virtualenv](https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv)
+  # ** 🐍 ZSH plugin to automatically switch python virtualenvs (including pipenv and poetry) as you move between directories **
+  zinit ice wait'2' lucid
+  zinit light MichaelAquilina/zsh-autoswitch-virtualenv
+fi
 #################
 # Call by plugin manager
 ######

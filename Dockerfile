@@ -25,6 +25,17 @@ RUN \
           curl \
           zsh \
           locales \
+          zsh \
+          exa \
+          zoxide \
+          nano \
+          python3 \
+          python \
+          python-pip \
+          silversearcher-ag \
+          wget \
+          fzf \
+          git \
           git-core && \
   rm -rf /var/lib/apt/lists/*
 

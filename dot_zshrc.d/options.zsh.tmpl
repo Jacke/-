@@ -2,11 +2,10 @@
 ##########################        ** Dotfiles Shell Options **        ##############################################################
 ##########################          https://dotfiles.download         ##############################################################
 ####################################################################################################################################
-# GLOBDOTS lets files beginning with a . be matched without explicitly specifying the dot.
-# setopt globdots
-setopt multios
-setopt prompt_subst
-
+setopt globdots      # lets files start with the . be matched without explicitly specifying the dot.
+setopt multios       # enables parallel writing to multiple output files in a single command
+setopt prompt_subst  # allows for the evaluation of commands and variables within the prompt string.
+setopt extended_glob # allows for advanced pattern matching and regular expressions in globbing.
 # If globs do not match a file, just run the command rather than throwing a no-matches error.
 # This is especially useful for some commands with '^', '~', '#', e.g. 'git show HEAD^1'
 unsetopt NOMATCH
@@ -16,10 +15,11 @@ export MOTD="neofetch"
 export MOTD_PARAMS=""
 
 # ** Completion **
-# Empty ENV = Vanilla OMZ completion
-# AUTOCOMPLETE = zsh-autocomplete plugin (https://github.com/marlonrichert/zsh-autocomplete)
+# ^ Empty        = Vanilla OMZ completion
+# ^ AUTOCOMPLETE = zsh-autocomplete plugin (https://github.com/marlonrichert/zsh-autocomplete)
 COMPLETION={{ .prompt_completion }}
-# setopt correct_all # autocorrect commands
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
+
 # setopt auto_list # automatically list choices on ambiguous completion
 # setopt auto_menu # automatically use menu completion
 # setopt always_to_end # move cursor to end if word had one match
@@ -29,5 +29,4 @@ zstyle ':completion:*' menu select # select completions with arrow keys
 
 # ** Correction **
 export ENABLE_CORRECTION=true
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
-
+# setopt correct_all # autocorrect commands

@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/zsh
 ### Dotfiles (iam) project v1.0.0
 ### [Stan S](https://github.com/Jacke/-)
 ### Copyright 2020-2022
 ### <\*/>
-
+set -euo pipefail
 # ENV Variables
 export NONINTERACTIVE=1
 export NO_EDIT=1
@@ -65,16 +65,19 @@ function get_params() {
 		SIGNKEYID="F4DEF918475A5F3F"
 		GITHUB_LOGIN="steph_hol"
 		GITHUB_TOKEN=""
-		FULL_PKG="true"
+		EXTRA_PKGS="true"
 		GPGSIGN="true"
-		FULL_PLUGINS="true"
+		EXTRA_PLUGINS="true"
 		SIGNKEYID2="AC28749A07E79FF0"
 		EMAIL2=""
+		COMPLETION=""
+		GPGSIGN2="false"
 	else
 		read -p "Your first name : " FNAME
 		read -p "Your last name : " LNAME
 		read -p "Your email : " EMAIL
 		read -p "GPG Key ID (optional) : " SIGNKEYID
+		read -p "Shell Completion system (AUTOCOMPLETE or Default if empty) : " COMPLETION
 		read -p "Github username (optional) : " GITHUB_LOGIN
 		read -p "Github API Token (optional, you can set it later) : " GITHUB_TOKEN
 
@@ -83,9 +86,10 @@ function get_params() {
 		read -p "Additional GPG Key ID (optional) : " SIGNKEYID2
 		read -p "Additional email (optional) : " EMAIL2
 
-		get_yes_keypress "Do you wish to install extra-useful system packages [y/n]?" && FULL_PKG="true" || FULL_PKG="false"
+		get_yes_keypress "Do you wish to install extra-useful system packages [y/n]?" && EXTRA_PKGS="true" || EXTRA_PKGS="false"
 		get_yes_keypress "Do you use GPG [y/n]?" && GPGSIGN="true" || GPGSIGN="false"
-		get_yes_keypress "Do you wish to install extra-useful zsh plugins [y/n]?" && FULL_PLUGINS="true" || FULL_PLUGINS="false"
+		get_yes_keypress "Do you use additinal GPG key [y/n]?" && GPGSIGN2="true" || GPGSIGN2="false"
+		get_yes_keypress "Do you wish to install extra-useful zsh plugins [y/n]?" && EXTRA_PLUGINS="true" || EXTRA_PLUGINS="false"
 	fi
 }
 
@@ -100,9 +104,8 @@ function core_install() {
 	mkdir -p ~/$DEV_PREFIX
 	cd ~/$DEV_PREFIX
 	# ** Shell dependencies **
-	git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
 	if [[ "$DOCKER" -eq 1 ]]; then
-		mv /dotfiles ~/$DEV_PREFIX/dotfiles
+		cp -r /dotfiles ~/$DEV_PREFIX/dotfiles
 	else
 		git clone https://github.com/Jacke/- ~/$DEV_PREFIX/dotfiles
 	fi
@@ -119,37 +122,42 @@ function core_install() {
 		rm -rf ~/.local/share/chezmoi
 	fi
 	ln -s ~/$DEV_PREFIX/dotfiles ~/.local/share/chezmoi
-	cd ~/.local/share/chezmoi
+	cd ~/$DEV_PREFIX/dotfiles
 
-	## ** Install arguments **
+	## ** Install params **
+	echo "Please enter your details. You may add or change them later: "
+	echo ""
 	get_params
-	echo -e "Params: chezmoi init
-		--promptBool full=$FULL_PKG
-		--promptBool gpgsign=$GPGSIGN
-		--promptBool extra_zsh_plugins=$FULL_PLUGINS
-		--promptString fname=$FNAME
-		--promptString lname=$LNAME
-		--promptString email=$EMAIL
-		--promptString signkey_id=$SIGNKEYID
-		--promptString signkey_id2=$SIGNKEYID2
-		--promptString email2=$EMAIL2
-		--promptString github_login=$GITHUB_LOGIN
-		--promptString github_token=$GITHUB_TOKEN"
-
+	# echo -e "Params: chezmoi init
+	# 	--promptBool extra_pkgs=$EXTRA_PKGS
+	# 	--promptBool gpgsign=$GPGSIGN
+	# 	--promptBool gpgsign2=$GPGSIGN2
+	# 	--promptBool extra_zsh_plugins=$EXTRA_PLUGINS
+	# 	--promptString fname=$FNAME
+	# 	--promptString lname=$LNAME
+	# 	--promptString email=$EMAIL
+	# 	--promptString signkey_id=$SIGNKEYID
+	# 	--promptString prompt_completion=$COMPLETION
+	# 	--promptString signkey_id2=$SIGNKEYID2
+	# 	--promptString email2=$EMAIL2
+	# 	--promptString github_login=$GITHUB_LOGIN
+	# 	--promptString github_token=$GITHUB_TOKEN"
+	echo "chezmoi init --promptBool extra_pkgs=$EXTRA_PKGS --promptBool gpgsign=$GPGSIGN --promptBool extra_zsh_plugins=$EXTRA_PLUGINS --promptString fname=$FNAME --promptString lname=$LNAME --promptString email=$EMAIL --promptString signkey_id=$SIGNKEYID --promptString signkey_id2=$SIGNKEYID2 --promptString email2=$EMAIL2 --promptString github_login=$GITHUB_LOGIN --promptString github_token=$GITHUB_TOKEN"
 	chezmoi init \
-		--promptBool full=$FULL_PKG \
+		--promptBool extra_pkgs=$EXTRA_PKGS \
 		--promptBool gpgsign=$GPGSIGN \
-		--promptBool extra_zsh_plugins=$FULL_PLUGINS \
+		--promptBool gpgsign2=$GPGSIGN2 \
+		--promptBool extra_zsh_plugins=$EXTRA_PLUGINS \
 		--promptString fname=$FNAME \
 		--promptString lname=$LNAME \
 		--promptString email=$EMAIL \
+		--promptString prompt_completion=$COMPLETION \
 		--promptString signkey_id=$SIGNKEYID \
 		--promptString signkey_id2=$SIGNKEYID2 \
 		--promptString email2=$EMAIL2 \
 		--promptString github_login=$GITHUB_LOGIN \
 		--promptString github_token=$GITHUB_TOKEN \
 		/
-
 	# ** Cleanup dotfiles git repo **
 	rm -rf .git
 	git init
@@ -158,42 +166,20 @@ function core_install() {
 	# ** Apply shell settings **
 	chezmoi apply
 
-	## ** Installation Summary **
-	# dotfiles-help installed
-	/bin/zsh -i -c "~/scripts/dotfiles/help.zsh installed"
-
 	## ** Install extra dependencies **
 	## TODO: Decide what is the way of invoking the script: explicit or run_once
 
 	## ** Restore backup shell configs **
 	## TODO: Add backupRestore() from dotfiles/backup
 
+	## ** Install Extensions **
+	echo 'Install plugins...'
+	/bin/zsh -i -c "echo 'Plugins have been installed'"
+	/bin/zsh -c "zsh -i -c \"echo 'Start prompt...'\";exit"
+
+	## ** Installation Summary **
+	/bin/zsh -c "dotfiles-help installed"
+
 	## ** Entrypoint **
-	exec zsh
-}
-
-function initParams() {
-	# Get install params (dir, extras packages, config parameters)
-	while [[ "$#" -gt 0 ]]; do
-		case $1 in
-		-d | --dir)
-			target="$2"
-			shift
-			;;
-		-c | --conf)
-			config="$2"
-			shift
-			;; # parse config params as <k|v>
-		-m | --full) full=1 ;;
-		*)
-			echo "Unknown parameter passed: $1"
-			exit 1
-			;;
-		esac
-		shift
-	done
-
-	echo "Where to install: $target"
-	echo "Should add all extra packages  : $full"
-	echo "Config parameters : $config"
+	/bin/zsh
 }

@@ -1,8 +1,11 @@
-# Update
+#  ~ (iam) Dotfiles Update
 
 ## CLI
 
-dotfiles-update
+### Base update
+`dotfiles-update`
 
-## Components
-
+Perform update of:
+* System and packages
+* zsh plugins
+* npm packages

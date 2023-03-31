@@ -1,4 +1,4 @@
-# ~ Dotfiles
+# ~ (iam) Dotfiles
 
 <p align="center">
   <img width="63%" src="./pics/logo.png">
