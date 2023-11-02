@@ -2,10 +2,10 @@
 
 ## CLI
 
-### Base update
+### Global update
 `dotfiles-update`
 
-Perform update of:
-* System and packages
+Will update of:
+* System itself and packages (under package manager)
 * zsh plugins
 * npm packages
