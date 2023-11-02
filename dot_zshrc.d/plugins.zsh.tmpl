@@ -23,7 +23,9 @@ zinit light-mode for \
 # ** [deffer](https://github.com/romkatv/zsh-defer) **
 # * Deferred execution of Zsh commands *
 zinit light romkatv/zsh-defer
+
 # ** [z-a-eval](https://github.com/NICHOLAS85/z-a-eval ) ** Eval scripts cache
+
 #zinit light NICHOLAS85/z-a-eval
 ####################################################
 # Plugins                                          #
@@ -37,6 +39,7 @@ zinit light romkatv/zsh-defer
 #       eval"atuin init zsh" run-atpull
 # zinit light zdharma-continuum/null
 # zinit load ellie/atuin*
+
 if (exists atuin); then
   zsh-defer eval "$(atuin init zsh --disable-up-arrow)"
 fi
@@ -57,6 +60,7 @@ if [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then zsh-defer 
 # zinit ice wait'0' lucid id-as"zoxide" has"zoxide" \
       # eval"zoxide init zsh" run-atpull
 # zinit light ajeetdsouza/zoxide
+
 if (exists zoxide); then
   zsh-defer eval "$(zoxide init zsh)"
 fi
@@ -100,12 +104,13 @@ fi
 zinit ice wait'2' lucid src"autopair.zsh"
 zinit light hlissner/zsh-autopair
 
+# ** [zsh-autoswitch-virtualenv](https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv)
+# ** 🐍 ZSH plugin to automatically switch python virtualenvs (including pipenv and poetry) as you move between directories **
 if (exists python); then
-  # ** [zsh-autoswitch-virtualenv](https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv)
-  # ** 🐍 ZSH plugin to automatically switch python virtualenvs (including pipenv and poetry) as you move between directories **
-  zinit ice wait'2' lucid
-  zinit light MichaelAquilina/zsh-autoswitch-virtualenv
+zinit ice wait'2' lucid
+zinit light MichaelAquilina/zsh-autoswitch-virtualenv
 fi
+
 #################
 # Call by plugin manager
 ######
@@ -120,8 +125,10 @@ zinit light marlonrichert/zsh-hist
 # ** [TheFuck](https://github.com/nvbn/thefuck) Magnificent app which corrects your previous console command
 # ** [zsh-thefuck](https://github.com/laggardkernel/zsh-thefuck) **
 # ** ZSH plugin with thefuck initialization and useful functions **
-zinit ice wait'1' lucid
-zinit light laggardkernel/zsh-thefuck
+if [[ "$DOTFILES_CORRECTION" == "thefuck" ]]; then
+  zinit ice wait'1' lucid
+  zinit light laggardkernel/zsh-thefuck
+fi
 
 # ** [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) 
 # ** 🐠 ZSH port of Fish history search (up arrow)
@@ -164,8 +171,11 @@ zinit light zdharma-continuum/zsh-diff-so-fancy
 # ** [Enhanced colors](https://github.com/zpm-zsh/colors) ** For Zsh
 zinit ice wait'3' lucid
 zinit light zpm-zsh/colors
+
+# ** [colorize](https://github.com/zpm-zsh/colorize) ** Colorize the output of various programs
 zplugin ice wait'3' lucid
 zinit light zpm-zsh/colorize
+
 ####################################################
 # Snippets                                         #
 ####################################################
@@ -242,15 +252,18 @@ if (is-macos); then
     zplugin light Jacke/iterm-tab-colors
   fi
 fi
+
 ####################################################
 # Unused                                           #
 ####################################################
 # ** [zsh-async](https://github.com/mafredri/zsh-async) Tool to perform tasks asynchronously without external tools.
 #zinit ice wait'3' lucid
 #zinit light mafredri/zsh-async
+
 # ** [forgit](https://github.com/wfxr/forgit) 💤 A utility tool powered by fzf for using git interactively.
 #zinit ice wait'3' lucid
 #zinit light wfxr/forgit
+
 # ** [fancy-ctrl-z](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/fancy-ctrl-z) **
 # Use Ctrl-Z to switch back to Vim
 # zplugin ice wait'5' lucid

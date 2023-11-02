@@ -6,25 +6,17 @@ export BAT_PAGER="less -irRSx4"
 export YARN_ENABLED=true
 export TOUCHBAR_GIT_ENABLED=true
 
-setopt correct
-if [[ "$ENABLE_CORRECTION" == "true" ]]; then
-  alias cp='nocorrect cp'
-  alias ebuild='nocorrect ebuild'
-  alias gist='nocorrect gist'
-  alias heroku='nocorrect heroku'
-  alias hpodder='nocorrect hpodder'
-  alias man='nocorrect man'
-  alias mkdir='nocorrect mkdir'
-  alias mv='nocorrect mv'
-  alias mysql='nocorrect mysql'
-  alias sudo='nocorrect sudo'
-  alias su='nocorrect su'
+if [[ "$DOTFILES_CORRECTION" == "zsh" ]]; then
+  setopt correct
+  setopt correct_all
   if [ -f ~/.zsh_nocorrect ]; then
       while read -r COMMAND; do
           alias $COMMAND="nocorrect $COMMAND"
       done < ~/.zsh_nocorrect
   fi
-  setopt correct_all
+else
+  unsetopt correct
+  unsetopt correct_all
 fi
 ####################################################################################################################################
 ##########################         **Completion**                   ################################################################

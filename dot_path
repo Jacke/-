@@ -3,14 +3,10 @@
 ##########################      https://dotfiles.download      ######################################################################
 ####################################################################################################################################
 ####################################################
-# General                                          #
-####################################################
-export PATH=/usr/local/bin:${PATH}:/sbin:/usr/local/sbin
-export PATH="$HOME/.local/bin:$PATH"
-####################################################
 # Go Lang                                          #
 ####################################################
-exists go && export GOPATH="$HOME/go" && export GOROOT="$HOME/.go" && export PATH=${PATH}:`go env GOPATH`/bin
+exists asdf && GOV=$(asdf where golang) && export GOROOT=$GOV/go
+exists go && export GOPATH="$HOME/go" && export PATH=${PATH}:$(go env GOPATH)/bin
 ####################################################
 # Java                                             #
 ####################################################
@@ -18,12 +14,6 @@ if [ -d $HOME/.sdkman ]; then
   export SDKMAN_INIT="$HOME/.sdkman/bin/sdkman-init.sh"
 else
   exists javac && export JAVA_HOME="$(/usr/libexec/java_home)" && export PATH="${JAVA_HOME}/bin:${PATH}"
-fi
-####################################################
-# Rust                                             #
-####################################################
-if [ -d $HOME/.cargo ]; then
-  export PATH="$HOME/.cargo/bin:$PATH"
 fi
 ####################################################
 # Android                                          #
@@ -50,6 +40,20 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 ####################################################
+# --httptoolkit--                                  #
+####################################################
+# This section will be reset each time a HTTP Toolkit terminal is opened
+if [ -n "$HTTP_TOOLKIT_ACTIVE" ]; then
+    # When HTTP Toolkit is active, we inject various overrides into PATH
+    export PATH="/Applications/HTTP Toolkit.app/Contents/Resources/app/httptoolkit-server/overrides/path:$PATH"
+    if which winpty >/dev/null 2>&1; then
+        # Work around for winpty's hijacking of certain commands
+        alias php=php
+        alias node=node
+    fi
+fi
+# --httptoolkit-end--
+####################################################
 # Dotfile Scripts                                  #
 ####################################################
 if (is-macos); then
@@ -59,12 +63,30 @@ if (is-linux); then
   export PATH="$HOME/scripts/bin:$PATH"
 fi
 ####################################################
+# System                                           #
+####################################################
+export PATH=/usr/local/bin:${PATH}:/sbin:/usr/local/sbin
+export PATH="$HOME/.local/bin:$PATH"
+####################################################
 # Cleanup Path                                     #
 ####################################################
-typeset -gU path
+# typeset -gU path
+####################################################
+# Rust                                             #
+####################################################
+if [ -d $HOME/.cargo ]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
 ####################################################
 # User PATH                                        #
 # Add your ENV after this line                     #
 # to avoid merge conflicts                         #
 ####################################################
 export PATH="$HOME/Dev/git-fuzzy/bin:$PATH"
+PATH=/usr/ffbin:$PATH
+####################################################
+# Tools                                            #
+####################################################
+if [ -d /usr/local/opt/elasticsearch ]; then
+  export PATH="/usr/local/opt/elasticsearch@6/bin:$PATH"
+fi
