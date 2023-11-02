@@ -25,7 +25,7 @@ if !(exists brew); then
 fi
 
 # ** Essentials **
-## TODO: Replace it with unipack install Jacke/minimal-dotfiles
+## TODO: Replace it with UniPack tool -> Jacke/minimal-dotfiles
 brew install chezmoi zsh exa ccat zoxide atuin asdf the_silver_searcher neofetch fzf
 brew install romkatv/powerlevel10k/powerlevel10k
 

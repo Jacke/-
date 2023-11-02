@@ -23,7 +23,8 @@ render-logo $DIR_PATH
 
 if [[ $OSTYPE == 'darwin'* ]]; then
   header "Updating macOS..."
-  sudo softwareupdate -i -a
+  sudo softwareupdate -i -a --background
+  header "Updating macOS packages..."
   brew update -v && brew upgrade -v && brew outdated -v
 fi
 

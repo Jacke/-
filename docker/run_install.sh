@@ -1,5 +1,8 @@
 #!/bin/zsh
-
+###############################################################
+# Dotfiles Docker Installer
+# TODO: Express as https://github.com/deluan/zsh-in-docker
+###############################################################
 export DOCKER=1
 SCRIPT_DIR=$(dirname "$0")
 INSTALL_DIR=$SCRIPT_DIR/../scripts/dotfiles
