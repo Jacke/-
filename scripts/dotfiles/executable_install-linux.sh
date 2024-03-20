@@ -1,10 +1,10 @@
-#!/bin/zsh
+#!/bin/bash
 ### Dotfiles (iam) project v1.0.0
 ### [Stan S](https://github.com/Jacke/-)
 ### Copyright 2020-2022
 ### <\*/>
 set -euo pipefail
-if [[ "$DOCKER" -eq 1 ]]; then
+if [[ -n "${DOCKER+x}" ]] && [[ "$DOCKER" -eq 1 ]]; then
 	full_path=$(realpath $0)
 	dir_path=$(dirname $full_path)
 	source $INSTALL_COMMON

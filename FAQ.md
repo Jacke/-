@@ -20,7 +20,7 @@ zinit creinstall zsh-users/zsh-completions
 ```
 
 
-### Bug with multilines (iTerm2 Mac OS)
+### Bug with multi-line spaces (iTerm2 Mac OS)
 
 **Solution**
 Reinstall iTerm2

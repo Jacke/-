@@ -154,3 +154,22 @@ autoload run-help
 [ -d /usr/share/zsh/help ] && HELPDIR=/usr/share/zsh/help
 [ -d /usr/local/share/zsh/help ] && HELPDIR=/usr/local/share/zsh/help
 alias help=run-help
+
+
+
+## Git
+
+# Alias to create a new branch or switch to an existing branch
+alias gco='git checkout'
+alias gcb='function _gcb(){ git checkout -b $1 || git checkout $1; }; _gcb'
+
+# Alias to switch to the master branch
+alias gcm='git checkout master'
+
+# Alias for pulling with rebase from the master branch
+alias gprm='git pull origin master --rebase'
+
+# Alias for rebasing the current branch on top of the master branch
+alias grbm='git rebase master'
+
+
