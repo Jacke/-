@@ -27,7 +27,7 @@ fi
 # Chezmoi – the best dotfiles manager
 if ! exists chezmoi; then
 	sh -c "$(curl -fsLS https://chezmoi.io/get)"
-	cp ./bin/chezmoi /bin/
+	sudo cp ./bin/chezmoi /bin/
 fi
 
 # Atuin – shell history app
