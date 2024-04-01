@@ -142,7 +142,7 @@
 	email = {{ .email }}
   github = {{ .github_login }}
 {{- if .gpgsign }}
-	signingkey = {{ .signkey_id }}
+#	signingkey = {{ .signkey_id }}
   {{- if .gpgsign2 }}
     signinkey = {{ .signkey_id2 }}
     email = {{ .email2 }}
@@ -202,7 +202,7 @@
 	changed = green
 	untracked = cyan
 [commit]
-  gpgsign = {{ .gpgsign }}
+#  gpgsign = {{ .gpgsign }}
   template = ~/.config/git/template/commit
 {{ if eq .chezmoi.os "darwin" }}
 [credential]
