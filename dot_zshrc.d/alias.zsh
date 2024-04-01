@@ -173,6 +173,8 @@ alias help=run-help
 
 ## Git
 
+alias gbranch='show_git_branch'
+
 # Alias to create a new branch or switch to an existing branch
 alias gco='git checkout'
 alias gcb='function _gcb(){ git checkout -b $1 || git checkout $1; }; _gcb'

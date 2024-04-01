@@ -23,6 +23,7 @@ render-logo $DIR_PATH
 
 if [[ $OSTYPE == 'darwin'* ]]; then
   header "Updating macOS..."
+  header "Please enter your password"
   sudo softwareupdate -i -a --background
   header "Updating macOS packages..."
   brew update -v && brew upgrade -v && brew outdated -v

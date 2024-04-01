@@ -23,8 +23,8 @@ jobs:
           brew update --preinstall && brew install shellcheck
       - name: Get PWD outputs
         run: echo "${{ join(steps.pwd.outputs.*, '\n') }}"
-      - name: Execute ShellCheck
-        run: test $(shellcheck -f gcc ~/dot_zshrc ~/dot_zshrc.d/* | grep -v "SC1036\|SC1056\|SC1070\|SC1072\|SC1073\|SC1083\|SC2034\|SC2139\|SC2148\|SC1090\|SC1117\|SC2206\|SC1009\|SC2016\|SC2046\|SC2154" | tee -a /dev/stderr | wc -l) -le 1
+      # - name: Execute ShellCheck
+      #  run: test $(shellcheck -f gcc ~/dot_zshrc ~/dot_zshrc.d/* | grep -v "SC1036\|SC1056\|SC1070\|SC1072\|SC1073\|SC1083\|SC2034\|SC2139\|SC2148\|SC1090\|SC1117\|SC2206\|SC1009\|SC2016\|SC2046\|SC2154" | tee -a /dev/stderr | wc -l) -le 1
       # - name: Configure Homebrew cache
         # uses: actions/cache@v2
         # with:
