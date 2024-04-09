@@ -188,4 +188,4 @@ alias gprm='git pull origin master --rebase'
 # Alias for rebasing the current branch on top of the master branch
 alias grbm='git rebase master'
 
-
+alias gpcb="git push origin $(branch)"
